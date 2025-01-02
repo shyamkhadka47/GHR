@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import TableOne from '../components/Tables/TableOne';
+
 import { useCheckLocalColor } from '../hooks/useCheckLocalColor';
 
 
@@ -22,7 +22,7 @@ const Aboutus = () => {
           </button>
         </Link>
         <div className="mt-[20px]">
-          <TableOne />
+       
         </div>
       </div>
     </div>
