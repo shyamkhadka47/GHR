@@ -22,7 +22,7 @@ app.use((err, req, res, next) => {
   if (err instanceof multer.MulterError) {
     // Handle multer-specific errors
 
-    if (err.code === "LIMIT_FILE_SIZE") {
+    if (err.code === "LIMIT_FILE_SIZE" "something") {
       return res
         .status(400)
         .json({ success: false, message: "File size is too large" });
