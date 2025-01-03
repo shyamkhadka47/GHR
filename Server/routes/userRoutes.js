@@ -2,12 +2,13 @@ import express from "express";
 import authController from "../controllers/authController.js";
 import protect from "../middleware/authCheck.js";
 import siteSettingController from "../controllers/siteSettingController.js";
-import { logoupload, serviceupload, sliderupload, testimonialupload } from "../multerStorage/multer-config.js";
+import { galleryupload, logoupload, serviceupload, sliderupload, testimonialupload } from "../multerStorage/multer-config.js";
 import faqController from "../controllers/faqcontroller.js";
 import sliderController from "../controllers/sliderController.js";
 import userqueryController from "../controllers/userqueryController.js";
 import serviceController from "../controllers/serviceController.js";
 import testimonialController from "../controllers/testimonialController.js";
+import galleryController from "../controllers/galleryController.js";
 
 
 const Router = express.Router();
@@ -57,6 +58,13 @@ Router.get("/getalltestimonial", protect, testimonialController.getAllTestimonia
 Router.get("/getsingletestimonial/:id", protect, testimonialController.getSingleTestimonial)
 Router.put("/updatetestimonial/:id", protect, testimonialupload.single("image"), testimonialController.updateTestimonial)
 Router.delete("/deletetestimonial/:id", protect, testimonialController.deleteTestimonial)
+
+// GALLERY API
+Router.post("/addgallery", protect,galleryupload.single("image"),galleryController.addNewGallery )
+Router.get("/getallgallery", galleryController.getAllGallery )
+Router.get("/getsinglegallery/:id", protect, galleryController.getSingleGallery)
+Router.put("/updategallery/:id", protect, galleryupload.single("image"),galleryController.updateGallery)
+Router.delete("/deletegallery/:id", protect, galleryController.deleteGallery)
 
 
 export default Router;
