@@ -1,20 +1,19 @@
 import fs from "fs";
 import slidermodal from "../models/slidermodel.js";
+import mongoose from "mongoose";
 class sliderController {
   static addSlider = async (req, res) => {
     const { title, slogan, description } = req.body;
     const { filename } = req.file;
 
     try {
-      if (!title || !slogan || (!description && filename)) {
+      if (!title || !slogan || !description) {
         if (filename) {
-          fs.unlink(`public/slider/${filename}`, (err) => {
-            if (err) {
-              return res
-                .status(400)
-                .json({ success: false, message: "Error Deleting Old File" });
-            }
-          });
+         try {
+           await fs.promises.unlink(`public/slider/${filename}`);
+         } catch (error) {
+          console.log(error)
+         }
         }
 
         return res
@@ -25,20 +24,18 @@ class sliderController {
 
       if (findslider.length > 2) {
         if (filename) {
-          fs.unlink(`public/slider/${filename}`, (err) => {
-            if (err) {
-              return res.status(400).json({
-                success: false,
-                message: "Error deleting uploded image",
-              });
-            }
-          });
+        try {
+            await fs.promises.unlink(`public/slider/${filename}`);
+        } catch (error) {
+          console.log(error.message)
+        }
         }
 
         return res
           .status(400)
           .json({ success: false, message: "Max 3 Sliders Can be Uploaded" });
       }
+    
       const saveslider = await slidermodal.create({
         title,
         slogan,
@@ -46,6 +43,13 @@ class sliderController {
         sliderimage: filename,
       });
       if (!saveslider) {
+        if (filename) {
+          try {
+              await fs.promises.unlink(`public/slider/${filename}`);
+          } catch (error) {
+            console.log(error.message)
+          }
+          }
         return res
           .status(400)
           .json({ success: false, message: "New Slider Not Created" });
@@ -54,6 +58,13 @@ class sliderController {
         .status(200)
         .json({ success: true, message: "Slider Created SuccessFully" });
     } catch (error) {
+      if(filename){
+        try {
+          await fs.promises.unlink(`public/slider/${filename}`)
+        } catch (error) {
+          
+        }
+      }
       return res.status(500).json({
         success: false,
         message: "Internal Server Error Please Try again",
@@ -153,16 +164,20 @@ class sliderController {
 
     try {
       const findslider = await slidermodal.findById(id);
+  
       if (!findslider) {
+        if(filename){
+          try {
+            await fs.promises.unlink(`public/slider/${filename}`)
+          } catch (error) {
+            console.log(error)
+          }
+        }
         return res
           .status(400)
           .json({ success: false, message: "Slider Not Found" });
       }
-      if (filename) {
-        fs.unlink(`public/slider/${findslider.sliderimage}`, (err) => {
-          console.log(err);
-        });
-      }
+     
       const updatedslider = await slidermodal.findByIdAndUpdate(id, {
         title,
         slogan,
@@ -170,14 +185,35 @@ class sliderController {
         sliderimage: filename,
       });
       if (!updatedslider) {
+        if(filename){
+          try {
+            await fs.promises.unlink(`public/slider/${filename}`)
+          } catch (error) {
+            console.log(error)
+          }
+        }
         return res
           .status(400)
           .json({ success: false, message: "Error Updating Slider" });
+      }
+      if (filename) {
+        try {
+          await fs.promises.unlink(`public/slider/${findslider.sliderimage}`);
+        } catch (error) {
+         console.log(error) 
+        }
       }
       return res
         .status(200)
         .json({ success: true, message: "Slider Updated successfully" });
     } catch (error) {
+      if (filename) {
+        try {
+          await fs.promises.unlink(`public/slider/${filename}`);
+        } catch (error) {
+         console.log(error) 
+        }
+      }
       return res
         .status(500)
         .json({

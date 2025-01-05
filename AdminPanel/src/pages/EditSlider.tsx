@@ -46,7 +46,7 @@ const EditSlider = () => {
       const res = await axiosInstance.put(`/updateslider/${id}`, formdata);
       if (res.status == 200) {
         toast.success(res.data.message);
-        getsingleslider()
+        getsingleslider();
       }
     } catch (error) {
       if (isAxiosError(error)) {
@@ -55,20 +55,18 @@ const EditSlider = () => {
     }
   };
 
-
-
   //   Get Data
   const getsingleslider = async () => {
     try {
       const res = await axiosInstance.get(`/getsingleslider/${id}`);
       if (res.status == 200) {
-        const imagefile= await downloadImage(res?.data?.data?.sliderimage)
+        const imagefile = await downloadImage(res?.data?.data?.sliderimage);
         setData(() => ({
           title: res?.data?.data?.title,
           slogan: res?.data?.data?.slogan,
           description: res?.data?.data.description,
         }));
-        setImgSrc(imagefile)
+        setImgSrc(imagefile);
       }
     } catch (error) {
       if (isAxiosError(error)) {

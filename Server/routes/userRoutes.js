@@ -2,13 +2,14 @@ import express from "express";
 import authController from "../controllers/authController.js";
 import protect from "../middleware/authCheck.js";
 import siteSettingController from "../controllers/siteSettingController.js";
-import { galleryupload, logoupload, serviceupload, sliderupload, testimonialupload } from "../multerStorage/multer-config.js";
+import { aboutupload, galleryupload, logoupload, serviceupload, sliderupload, testimonialupload } from "../multerStorage/multer-config.js";
 import faqController from "../controllers/faqcontroller.js";
 import sliderController from "../controllers/sliderController.js";
 import userqueryController from "../controllers/userqueryController.js";
 import serviceController from "../controllers/serviceController.js";
 import testimonialController from "../controllers/testimonialController.js";
 import galleryController from "../controllers/galleryController.js";
+import aboutController from "../controllers/aboutController.js";
 
 
 const Router = express.Router();
@@ -65,6 +66,11 @@ Router.get("/getallgallery", galleryController.getAllGallery )
 Router.get("/getsinglegallery/:id", protect, galleryController.getSingleGallery)
 Router.put("/updategallery/:id", protect, galleryupload.single("image"),galleryController.updateGallery)
 Router.delete("/deletegallery/:id", protect, galleryController.deleteGallery)
+
+// ABOUT US API
+Router.post("/addaboutus", protect, aboutupload.single("image"), aboutController.addAboutUs )
+Router.get("/getaboutus", aboutController.getAboutUs)
+Router.put("/updateaboutus", protect, aboutupload.single("image"), aboutController.updateAboutUs)
 
 
 export default Router;

@@ -31,6 +31,7 @@ import EditSlider from './pages/EditSlider';
 import ViewUserquery from './pages/ViewUserquery';
 import EditService from './pages/EditService';
 import EditTestimonials from './pages/EditTestimonials';
+import EditGallery from './pages/EditGallery';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -82,6 +83,7 @@ function App() {
           <Route path="/edit-faq/:id" element={<EditFaq />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/add-new-gallery" element={<AddNewGallery />} />
+          <Route path="/edit-gallery/:id" element={<EditGallery />} />
           <Route path="/menu-category" element={<MenuCategory />} />
           <Route
             path="/add-new-menu-category"

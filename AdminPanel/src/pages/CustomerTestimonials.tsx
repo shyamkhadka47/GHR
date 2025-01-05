@@ -33,7 +33,7 @@ const CustomerTestimonials = () => {
     getalltestimonial();
   }, []);
 
-  console.log(data);
+
 
   const column = [
     { title: 'SN' },

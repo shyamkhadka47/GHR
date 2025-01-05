@@ -1,5 +1,7 @@
 import fs from "fs";
 import servicemodel from "../models/servicemodel.js";
+import mongoose from "mongoose";
+
 
 class serviceController {
   static addNewServices = async (req, res) => {
@@ -8,24 +10,21 @@ class serviceController {
     try {
       if (!title || !description) {
         if (filename) {
-          fs.unlink(`public/service/${filename}`, (err) => {
-            if (err) {
-              console.log(err);
-            }
-          });
+          try {
+            await fs.promises.unlink(`public/service/${filename}`);
+          } catch (error) {
+            console.log(error.message);
+          }
         }
         return res
           .status(400)
           .json({ success: false, message: "All Fields Required" });
       }
-
       if (!filename) {
-        return res
-          .status(400)
-          .json({
-            success: false,
-            message: "Image Required, Please Upload Image Less Than 1MB",
-          });
+        return res.status(400).json({
+          success: false,
+          message: "Image Required, Please Upload Image Less Than 1MB",
+        });
       }
 
       const saveservice = await servicemodel.create({
@@ -33,7 +32,15 @@ class serviceController {
         description,
         serviceImage: filename,
       });
+      
       if (!saveservice) {
+        if (filename) {
+          try {
+            await fs.promises.unlink(`public/service/${filename}`);
+          } catch (error) {
+            console.log(error);
+          }
+        }
         return res
           .status(400)
           .json({ success: false, message: "Error Creating Service " });
@@ -43,12 +50,17 @@ class serviceController {
         .status(200)
         .json({ success: true, message: "Service Created SuccessFully" });
     } catch (error) {
-      return res
-        .status(500)
-        .json({
-          success: false,
-          message: "Internal Server Error Please Try Again",
-        });
+      if (filename) {
+        try {
+          await fs.promises.unlink(`public/service/${filename}`);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      return res.status(500).json({
+        success: false,
+        message: "Internal Server Error Please Try Again",
+      });
     }
   };
   static getAllServices = async (req, res) => {
@@ -61,12 +73,10 @@ class serviceController {
       }
       return res.status(200).json({ success: true, data: findservice });
     } catch (error) {
-      return res
-        .status(500)
-        .json({
-          success: false,
-          message: "Internal Server Error Please Try Again",
-        });
+      return res.status(500).json({
+        success: false,
+        message: "Internal Server Error Please Try Again",
+      });
     }
   };
   static getSingleService = async (req, res) => {
@@ -83,12 +93,10 @@ class serviceController {
       }
       return res.status(200).json({ success: true, data: findservice });
     } catch (error) {
-      return res
-        .status(500)
-        .json({
-          success: false,
-          message: "Internal Server Error Please Try Again",
-        });
+      return res.status(500).json({
+        success: false,
+        message: "Internal Server Error Please Try Again",
+      });
     }
   };
   static updateService = async (req, res) => {
@@ -102,43 +110,60 @@ class serviceController {
       const findservice = await servicemodel.findById(id);
       if (!findservice) {
         if (filename) {
-          fs.unlink(`public/service/${filename}`, (err) => {
-            if (err) {
-              console.log(err);
-            }
-          });
+          try {
+            await fs.promises.unlink(`public/service/${filename}`);
+          } catch (error) {
+            console.log(error);
+          }
         }
         return res
           .status(400)
           .json({ success: false, message: "No Such Service Available" });
       }
-      if (filename) {
-        fs.unlink(`public/service/${findservice.serviceImage}`, (err) => {
-          if (err) {
-            console.log(err);
-          }
-        });
-      }
+
       const saveservice = await servicemodel.findByIdAndUpdate(id, {
         title,
         description,
         serviceImage: filename,
       });
+
       if (!saveservice) {
+        if (filename) {
+          try {
+            await fs.promises.unlink(`public/service/${filename}`);
+          } catch (error) {
+            console.log(error);
+          }
+        }
         return res
           .status(400)
           .json({ success: false, message: "Error Updating Service" });
+      }
+
+      if (filename) {
+        try {
+          await fs.promises.unlink(
+            `public/service/${findservice.serviceImage}`
+          );
+        } catch (error) {
+          console.log(error);
+        }
       }
       return res
         .status(200)
         .json({ success: true, message: "Service Updated Successfully" });
     } catch (error) {
-      return res
-        .status(500)
-        .json({
-          success: false,
-          message: "Internal Server Error Please Try Again",
-        });
+      if (filename) {
+        try {
+          await fs.promises.unlink(`public/service/${filename}`);
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
+      return res.status(500).json({
+        success: false,
+        message: "Internal Server Error Please Try Again",
+      });
     }
   };
   static deleteService = async (req, res) => {
@@ -153,11 +178,6 @@ class serviceController {
           .status(400)
           .json({ success: false, message: "No Such Service Available" });
       }
-      fs.unlink(`public/service/${foundservice.serviceImage}`, (err) => {
-        if (err) {
-          console.log(err);
-        }
-      });
 
       const findservice = await servicemodel.findByIdAndDelete(id);
       if (!findservice) {
@@ -166,16 +186,20 @@ class serviceController {
           .json({ success: false, message: "Error Deleting Service" });
       }
 
+      try {
+        await fs.promises.unlink(`public/service/${foundservice.serviceImage}`);
+      } catch (error) {
+        console.log(error);
+      }
+
       return res
         .status(200)
         .json({ success: true, message: "Service Deleted Successfully" });
     } catch (error) {
-      return res
-        .status(500)
-        .json({
-          success: false,
-          message: "Internal Server Error Please Try Again",
-        });
+      return res.status(500).json({
+        success: false,
+        message: "Internal Server Error Please Try Again",
+      });
     }
   };
 }

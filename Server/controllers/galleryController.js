@@ -1,37 +1,45 @@
 import fs from "fs";
 import gallerymodal from "../models/gallerymodel.js";
 
+
 class galleryController {
   static addNewGallery = async (req, res) => {
     const { description, caption } = req.body;
     const { filename } = req.file;
-    try {
-      if (!description || !caption) {
-        if (filename) {
-          fs.unlink(`public/gallery/${filename}`, (err) => {
-            if (err) {
-              console.log(err);
-            }
-          });
-        }
-        return res
-          .status(400)
-          .json({ success: false, message: "All Fields Required" });
-      }
-
-      if (!filename) {
-        return res.status(400).json({
-          success: false,
-          message: "Image Required Please Upload Image less Than 1MB",
+    if (!description || !caption) {
+      if (filename) {
+        fs.unlink(`public/gallery/${filename}`, (err) => {
+          if (err) {
+            console.log(err);
+          }
         });
       }
+      return res
+        .status(400)
+        .json({ success: false, message: "All Fields Required" });
+    }
 
+    if (!filename) {
+      return res.status(400).json({
+        success: false,
+        message: "Image Required Please Upload Image less Than 1MB",
+      });
+    }
+    try {
       const savegallery = await gallerymodal.create({
         description,
         caption,
         galleryImage: filename,
       });
+
       if (!savegallery) {
+        if (filename) {
+          try {
+            await fs.promises.unlink(`public/gallery/${filename}`);
+          } catch (error) {
+            console.log(error);
+          }
+        }
         return res.status(400).json({
           success: false,
           message: "Error Creating Gallery Please Try Again",
@@ -41,6 +49,13 @@ class galleryController {
         .status(200)
         .json({ success: true, message: "Gallery Created SuccessFully" });
     } catch (error) {
+      if (filename) {
+        try {
+          await fs.promises.unlink(`public/gallery/${filename}`);
+        } catch (error) {
+          console.log(error);
+        }
+      }
       return res.status(500).json({
         success: false,
         message: "Internal Server Error Please Try Again",
@@ -95,48 +110,102 @@ class galleryController {
     const { id } = req.params;
     const { description, caption } = req.body;
     const { filename } = req.file;
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "Id Required Please Choose Valid Id",
+      });
+    }
     try {
-      if (!id) {
-        return res
-          .status(400)
-          .json({
-            success: false,
-            message: "Id Required Please Choose Valid Id",
-          });
-      }
       const findgallery = await gallerymodal.findById(id);
+
       if (!findgallery) {
         if (filename) {
-          fs.unlink(`public/service/${filename}`, (err) => {
-            if (err) {
-              console.log(err);
-            }
-          });
+          try {
+            await fs.promises.unlink(`public/gallery/${filename}`);
+          } catch (error) {
+            console.log(error);
+          }
         }
         return res
           .status(400)
           .json({ success: false, message: "No Such Gallery Found" });
       }
-      if (filename) {
-        fs.unlink(`public/gallery/${findgallery.galleryImage}`, (err) => {
-          console.log(err);
-        });
-      }
-
       const updategallery = await gallerymodal.findByIdAndUpdate(
         id,
         { description, caption, galleryImage: filename },
         { new: true }
       );
       if (!updategallery) {
+        try {
+          await fs.promises.unlink(`public/gallery/${filename}`);
+        } catch (error) {
+          console.log(error);
+        }
         return res
           .status(400)
           .json({ success: false, message: "Error Updating Gallery" });
       }
 
+      if (filename) {
+        try {
+          await fs.promises.unlink(
+            `public/gallery/${findgallery.galleryImage}`
+          );
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
+
       return res
         .status(200)
         .json({ success: true, message: "Gallery updated Successfully" });
+    } catch (error) {
+      if (filename) {
+        try {
+          await fs.promises.unlink(`public/gallery/${filename}`);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      return res.status(500).json({
+        success: false,
+        message: "Internal Server Error Please Try Again",
+      });
+    }
+  };
+  static deleteGallery = async (req, res) => {
+    const { id } = req.params;
+    try {
+      if (!id) {
+        return res.status(400).json({
+          success: false,
+          message: "Id Required Please Choose Valid Id",
+        });
+      }
+      const findgallery = await gallerymodal.findById(id);
+      if (!findgallery) {
+        return res
+          .status(400)
+          .json({ success: false, message: "No Such Gallery Found" });
+      }
+
+      const deletegallery = await gallerymodal.findByIdAndDelete(id);
+    
+      if (!deletegallery) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Error Deleting Galler" });
+      }
+      try {
+        await fs.promises.unlink(`public/gallery/${findgallery.galleryImage}`);
+      } catch (error) {
+        console.log(error);
+      }
+
+      return res
+        .status(200)
+        .json({ success: true, message: "Gallery Deleted Successfully" });
     } catch (error) {
       return res.status(500).json({
         success: false,
@@ -144,7 +213,6 @@ class galleryController {
       });
     }
   };
-  static deleteGallery = async (req, res) => {};
 }
 
 export default galleryController;

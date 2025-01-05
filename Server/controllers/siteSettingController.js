@@ -31,61 +31,84 @@ class siteSettingController {
     } = req.body;
     const { filename } = req.file;
 
-    if (
-      (!businessname ||
+    try {
+      if (
+        !businessname ||
         !phonenumber ||
         !email ||
         !fblink ||
         !twitterlink ||
         !linkedlink ||
         !youtubelink ||
-        !shortdescriptionaboutbusiness) &&
-      filename
-    ) {
-      if (filename) {
-        fs.unlink(`public/uploads/${filename}`, (err) => {
-          if (err) {
-            console.error("Error deleting file:", err);
+        !shortdescriptionaboutbusiness
+      ) {
+        if (filename) {
+          try {
+            await fs.promises.unlink(`public/uploads/${filename}`);
+          } catch (error) {
+            console.log(error);
           }
-        });
+        }
+        return res
+          .status(400)
+          .json({ success: false, message: "All Field Required" });
       }
-      return res
-        .status(400)
-        .json({ success: false, message: "All Field Required" });
-    }
-    const findSiteSetting = await sitesettingmodal.find();
-    if (findSiteSetting.length > 0) {
-      if (filename) {
-        fs.unlink(`public/uploads/${filename}`, (err) => {
-          if (err) {
-            console.error("Error deleting file:", err);
+      const findSiteSetting = await sitesettingmodal.find();
+      if (findSiteSetting.length > 0) {
+        if (filename) {
+          try {
+            await fs.promises.unlink(`public/uploads/${filename}`);
+          } catch (error) {
+            console.log(error);
           }
-        });
+        }
+        return res
+          .status(400)
+          .json({ success: false, message: "Site Setting Already Exist" });
       }
-      return res
-        .status(400)
-        .json({ success: false, message: "Site Setting Already Exist" });
-    }
 
-    const createsitesetting = await sitesettingmodal.create({
-      businessname,
-      phonenumber,
-      email,
-      fblink,
-      twitterlink,
-      linkedlink,
-      youtubelink,
-      shortdescriptionaboutbusiness,
-      businesslogo: filename,
-    });
-    if (!createsitesetting) {
+      const createsitesetting = await sitesettingmodal.create({
+        businessname,
+        phonenumber,
+        email,
+        fblink,
+        twitterlink,
+        linkedlink,
+        youtubelink,
+        shortdescriptionaboutbusiness,
+        businesslogo: filename,
+      });
+
+      if (!createsitesetting) {
+        if (filename) {
+          try {
+            await fs.promises.unlink(`public/uploads/${filename}`);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+        return res
+          .status(400)
+          .json({ success: false, message: "Site Setting Not Created" });
+      }
       return res
-        .status(400)
-        .json({ success: false, message: "Site Setting Not Created" });
+        .status(200)
+        .json({ success: true, message: "Site Setting Created Successfully" });
+    } catch (error) {
+      if (filename) {
+        try {
+          await fs.promises.unlink(`public/uploads/${filename}`);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      return res
+        .status(500)
+        .json({
+          success: false,
+          message: "Internal Server Error Please Try Again",
+        });
     }
-    return res
-      .status(200)
-      .json({ success: true, message: "Site Setting Created Successfully" });
   };
 
   static editSiteSetting = async (req, res) => {
@@ -103,38 +126,65 @@ class siteSettingController {
     const { filename } = req.file;
     try {
       const findSiteSetting = await sitesettingmodal.findOne();
-      if (filename) {
-        fs.unlink(`public/uploads/${findSiteSetting.businesslogo}`, (err) => {
-          if (err) {
-            return res.status(400).json("Error Deleting Old File");
-          }
-        });
-        findSiteSetting.businesslogo = filename;
+      if (!findSiteSetting) {
+        try {
+          await fs.promises.unlink(`public/uploads/${filename}`);
+        } catch (error) {
+          console.log(error);
+        }
+        return res
+          .status(400)
+          .json({ success: false, message: "No Site Setting Found" });
       }
 
-      findSiteSetting.businessname = businessname;
-      findSiteSetting.phonenumber = phonenumber;
-      findSiteSetting.email = email;
-      findSiteSetting.fblink = fblink;
-      findSiteSetting.twitterlink = twitterlink;
-      findSiteSetting.linkedlink = linkedlink;
-      findSiteSetting.youtubelink = youtubelink;
-      findSiteSetting.shortdescriptionaboutbusiness =
-        shortdescriptionaboutbusiness;
+      const savesitesetting = await sitesettingmodal.findOneAndUpdate({
+        businessname,
+        phonenumber,
+        email,
+        fblink,
+        twitterlink,
+        linkedlink,
+        youtubelink,
+        shortdescriptionaboutbusiness,
+        businesslogo: filename,
+      });
 
-      const savingsitesettings = await findSiteSetting.save();
-      if (!savingsitesettings) {
+      if (!savesitesetting) {
+        if (filename) {
+          try {
+            await fs.promises.unlink(`public/uploads/${filename}`);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+
         return res
           .status(400)
           .json({ success: false, message: "Cannot Update Site Setting" });
+      }
+
+      if (filename) {
+        fs.unlink(`public/uploads/${findSiteSetting.businesslogo}`, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
       }
       return res
         .status(200)
         .json({ success: true, message: "Site Setting Updated SuccessFully" });
     } catch (error) {
-      return res
-        .status(500)
-        .json({ success: false, message: "Internal Server Error" });
+      if (filename) {
+        try {
+          await fs.promises.unlink(`public/uploads/${filename}`);
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
+      return res.status(500).json({
+        success: false,
+        message: "Internal Server Error Please Try Again",
+      });
     }
   };
 }

@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import testimonialmodal from "../models/testimonialmodel.js";
 
 import fs from "fs";
@@ -8,11 +9,11 @@ class testimonialController {
     try {
       if (!name || !title || !description) {
         if (filename) {
-          fs.unlink(`public/testimonial/${filename}`, (err) => {
-            if (err) {
-              console.log(err);
-            }
-          });
+          try {
+            await fs.promises.unlink(`public/testimonial/${filename}`);
+          } catch (error) {
+            console.log(error);
+          }
         }
         return res
           .status(400)
@@ -26,13 +27,29 @@ class testimonialController {
         testimonialImage: filename,
       });
       if (!savetestimonial) {
+        if (filename) {
+          try {
+            await fs.promises.unlink(`public/testimonial/${filename}`);
+          } catch (error) {
+            console.log(error);
+          }
+        }
         return res.status(400).json({
           success: true,
           message: "Error Saving Testimonial Please Try Again",
         });
       }
-      return res.status(200).json({ success: true, data: savetestimonial });
+      return res
+        .status(200)
+        .json({ success: true, message: "Testimonial Created Successfully" });
     } catch (error) {
+      if (filename) {
+        try {
+          await fs.promises.unlink(`public/testimonial/${filename}`);
+        } catch (error) {
+          console.log(error);
+        }
+      }
       return res.status(500).json({
         success: false,
         message: "Internal Server Error Please Try Again",
@@ -92,10 +109,10 @@ class testimonialController {
     try {
       if (!id) {
         return res
-          .status(400)
-          .json({ success: false, message: "Please Choose Valid Testimonial" });
+        .status(400)
+        .json({ success: false, message: "Please Choose Valid Testimonial" });
       }
-
+      
       const findtestimonial = await testimonialmodal.findById(id);
       if (!findtestimonial) {
         if (filename) {
@@ -106,33 +123,47 @@ class testimonialController {
           });
         }
         return res
-          .status(400)
-          .json({ success: false, message: "No Such Testimonial Exist" });
+        .status(400)
+        .json({ success: false, message: "No Such Testimonial Exist" });
       }
-      fs.unlink(
-        `public/testimonial/${findtestimonial.testimonialImage}`,
-        (err) => {
-          if (err) {
-            console.log(err);
-          }
-        }
-      );
-
+      
       const updatetestimonial = await testimonialmodal.findByIdAndUpdate(id, {
         name,
         title,
         description,
         testimonialImage: filename,
       });
+    
       if (!updatetestimonial) {
+        if (filename) {
+          try {
+            await fs.promises.unlink(`public/testimonial/${filename}`);
+          } catch (error) {
+            console.log(error);
+          }
+        }
         return res
           .status(400)
           .json({ success: false, message: "Error Updating Testimonial" });
+      }
+      try {
+        await fs.promises.unlink(
+          `public/testimonial/${findtestimonial.testimonialImage}`
+        );
+      } catch (error) {
+        console.log(error)
       }
       return res
         .status(200)
         .json({ success: true, message: "Testimonial Updated SuccessFully" });
     } catch (error) {
+      if (filename) {
+        try {
+          await fs.promises.unlink(`public/testimonial/${filename}`);
+        } catch (error) {
+          console.log(error);
+        }
+      }
       return res.status(500).json({
         success: false,
         message: "Internal Server Error Please Try Again",
@@ -140,34 +171,39 @@ class testimonialController {
     }
   };
   static deleteTestimonial = async (req, res) => {
-    const {id}=req.params
+    const { id } = req.params;
     try {
-        if (!id) {
-            return res.status(400).json({ success: false, message: "Please Choose Valid Testimonial To Delete" });
-          }
-          const foundtestimonial = await testimonialmodal.findById(id);
-          if (!foundtestimonial) {
-            return res
-              .status(400)
-              .json({ success: false, message: "No Such testimonial Available" });
-          }
-          fs.unlink(`public/testimonial/${foundtestimonial.testimonialImage}`, (err) => {
-            if (err) {
-              console.log(err);
-            }
-          });
-    
-          const findtestimonial = await testimonialmodal.findByIdAndDelete(id);
-          if (!findtestimonial) {
-            return res
-              .status(400)
-              .json({ success: false, message: "Error Deleting testimonial" });
-          }
-    
-          return res
-            .status(200)
-            .json({ success: true, message: "testimonial Deleted Successfully" });
-    
+      if (!id) {
+        return res.status(400).json({
+          success: false,
+          message: "Please Choose Valid Testimonial To Delete",
+        });
+      }
+      const foundtestimonial = await testimonialmodal.findById(id);
+      if (!foundtestimonial) {
+        return res
+          .status(400)
+          .json({ success: false, message: "No Such testimonial Available" });
+      }
+
+      const findtestimonial = await testimonialmodal.findByIdAndDelete(id);
+      if (!findtestimonial) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Error Deleting testimonial" });
+      }
+
+      try {
+        await fs.promises.unlink(
+          `public/testimonial/${foundtestimonial.testimonialImage}`
+        );
+      } catch (error) {
+        console.log(err);
+      }
+
+      return res
+        .status(200)
+        .json({ success: true, message: "testimonial Deleted Successfully" });
     } catch (error) {
       return res.status(500).json({
         success: false,

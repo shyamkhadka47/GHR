@@ -57,7 +57,6 @@ const Settings = () => {
     getFile();
     getsitesetting();
   }, [data?.businesslogo]);
-
   const [blogo, setblogo] = React.useState<File | null>(null);
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const Max_Size = 1 * 1024 * 1024;
@@ -71,11 +70,11 @@ const Settings = () => {
       toast.error('no file selected');
     }
   };
-
+  
   const handleChange = (e: any) => {
     setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 

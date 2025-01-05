@@ -33,8 +33,6 @@ const Slider = () => {
     getsliders();
   }, []);
 
-  console.log(data);
-
   const column = [
     { title: 'SN' },
     { title: 'Title' },

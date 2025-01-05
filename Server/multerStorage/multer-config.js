@@ -43,6 +43,15 @@ const galleryStorage = multer.diskStorage({
     cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
+
+const aboutStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/about");
+  },
+  filename: function (req, file, cb) {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
 export const logoupload = multer({
   storage: storage,
   limits: { fileSize: 1 * 1024 * 1024 },
@@ -64,5 +73,10 @@ export const testimonialupload = multer({
 
 export const galleryupload = multer({
   storage: galleryStorage,
+  limits: { fileSize: 1 * 1024 * 1024 },
+});
+
+export const aboutupload = multer({
+  storage: aboutStorage,
   limits: { fileSize: 1 * 1024 * 1024 },
 });
