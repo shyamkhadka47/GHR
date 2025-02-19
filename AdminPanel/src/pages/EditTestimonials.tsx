@@ -47,7 +47,7 @@ const EditTestimonials = () => {
       const res = await axiosInstance.put(`/updatetestimonial/${id}`, formdata);
       if (res.status == 200) {
         toast.success(res.data.message);
-        getsingletestimonial();
+        getsingletestimonial(id);
       }
     } catch (error) {
       if (isAxiosError(error)) {
@@ -57,7 +57,7 @@ const EditTestimonials = () => {
   };
 
   //   Get Data
-  const getsingletestimonial = async () => {
+  const getsingletestimonial = async (id:any) => {
     try {
       const res = await axiosInstance.get(`/getsingletestimonial/${id}`);
       if (res.status == 200) {
@@ -77,8 +77,8 @@ const EditTestimonials = () => {
   };
 
   React.useEffect(() => {
-    getsingletestimonial();
-  }, []);
+    getsingletestimonial(id);
+  }, [id]);
 
   return (
     <div className="bg-white w-full h-[80vh] shadow-md flex flex-col  gap-3">

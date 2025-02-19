@@ -47,7 +47,7 @@ const EditService = () => {
       const res = await axiosInstance.put(`/updateservice/${id}`, formdata);
       if (res.status == 200) {
         toast.success(res.data.message);
-        getsingleservice();
+        getsingleservice(id);
       }
     } catch (error) {
       if (isAxiosError(error)) {
@@ -57,7 +57,7 @@ const EditService = () => {
   };
 
   //   Get Data
-  const getsingleservice = async () => {
+  const getsingleservice = async (id:any) => {
     try {
       const res = await axiosInstance.get(`/getsingleservice/${id}`);
       if (res.status == 200) {
@@ -77,8 +77,8 @@ const EditService = () => {
   };
 
   React.useEffect(() => {
-    getsingleservice();
-  }, []);
+    getsingleservice(id);
+  }, [id]);
 
   return (
     <div className="bg-white w-full h-[80vh] shadow-md flex flex-col  gap-3">

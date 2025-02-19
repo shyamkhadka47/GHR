@@ -36,7 +36,7 @@ const EditSlider = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (!imgsrc) {
-      return toast.error('Image Required');
+      return toast.error('Image Required Less Than 1MB');
     }
     try {
       const formdata = new FormData();
@@ -47,7 +47,7 @@ const EditSlider = () => {
       const res = await axiosInstance.put(`/updateslider/${id}`, formdata);
       if (res.status == 200) {
         toast.success(res.data.message);
-        getsingleslider();
+        getsingleslider(id);
       }
     } catch (error) {
       if (isAxiosError(error)) {
@@ -57,7 +57,7 @@ const EditSlider = () => {
   };
 
   //   Get Data
-  const getsingleslider = async () => {
+  const getsingleslider = async (id:any) => {
     try {
       const res = await axiosInstance.get(`/getsingleslider/${id}`);
       if (res.status == 200) {
@@ -77,8 +77,8 @@ const EditSlider = () => {
   };
 
   React.useEffect(() => {
-    getsingleslider();
-  }, []);
+    getsingleslider(id);
+  }, [id]);
 
   return (
     <div className="bg-white w-full h-[80vh] shadow-md flex flex-col  gap-3">
