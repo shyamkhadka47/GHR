@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { BsUpload } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';

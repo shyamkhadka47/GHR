@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 
@@ -7,7 +8,7 @@ import toast from 'react-hot-toast';
 import axiosInstance from '../hooks/axiosConfig';
 import { isAxiosError } from 'axios';
 import { downloadImage } from '../hooks/convertImageToFile';
-import useGetSiteSettings from '../ApiHooks/sitesettings/useGetSiteSettings';
+// import useGetSiteSettings from '../ApiHooks/sitesettings/useGetSiteSettings';
 
 const Settings = () => {
   const getsitesetting = async () => {

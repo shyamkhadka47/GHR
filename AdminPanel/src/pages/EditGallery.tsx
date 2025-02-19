@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { isAxiosError } from 'axios';
 import React from 'react';
 import toast from 'react-hot-toast';
@@ -46,7 +47,7 @@ const EditGallery = () => {
       const res = await axiosInstance.put(`/updategallery/${id}`, formdata);
       if (res.status == 200) {
         toast.success(res.data.message);
-        getsinglegallery();
+        getsinglegallery(id);
       }
     } catch (error) {
       if (isAxiosError(error)) {
@@ -56,7 +57,7 @@ const EditGallery = () => {
   };
 
   //   Get Data
-  const getsinglegallery = async () => {
+  const getsinglegallery = async (id:any) => {
     try {
       const res = await axiosInstance.get(`/getsinglegallery/${id}`);
       if (res.status == 200) {
@@ -76,8 +77,9 @@ const EditGallery = () => {
   };
 
   React.useEffect(() => {
-    getsinglegallery();
-  }, []);
+    getsinglegallery(id);
+ 
+  }, [id]);
 
   return (
     <div className="bg-white w-full h-[80vh] shadow-md flex flex-col  gap-3">

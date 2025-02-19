@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { isAxiosError } from 'axios';
 import React from 'react';
 import toast from 'react-hot-toast';

@@ -15,7 +15,7 @@ const ViewUserquery = () => {
     description: '',
   });
 
-  const getsinglequery = async () => {
+  const getsinglequery = async (id:any) => {
     try {
       const res = await axiosInstance.get(`/getsingleuserquery/${id}`);
       if (res.status == 200) {
@@ -29,8 +29,8 @@ const ViewUserquery = () => {
   };
 
   React.useEffect(() => {
-    getsinglequery();
-  }, []);
+    getsinglequery(id);
+  }, [id]);
 
   // onChange handlers to update state for each field
   const handleChange = (e:any) => {
