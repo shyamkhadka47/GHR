@@ -10,6 +10,7 @@ import serviceController from "../controllers/serviceController.js";
 import testimonialController from "../controllers/testimonialController.js";
 import galleryController from "../controllers/galleryController.js";
 import aboutController from "../controllers/aboutController.js";
+import menuCategoryController from "../controllers/menuCategoryController.js";
 
 
 const Router = express.Router();
@@ -71,6 +72,10 @@ Router.delete("/deletegallery/:id", protect, galleryController.deleteGallery)
 Router.post("/addaboutus", protect, aboutupload.single("image"), aboutController.addAboutUs )
 Router.get("/getaboutus", aboutController.getAboutUs)
 Router.put("/updateaboutus", protect, aboutupload.single("image"), aboutController.updateAboutUs)
+
+// MENU CATEGORY API
+Router.post("/addmenucategory",protect,menuCategoryController.addMenuCategory)
+
 
 
 export default Router;

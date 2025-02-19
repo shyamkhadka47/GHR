@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 
 class serviceController {
   static addNewServices = async (req, res) => {
+   
     const { title, description } = req.body;
     const { filename } = req.file;
     try {

@@ -103,14 +103,14 @@ const Aboutus = () => {
       const res = await axiosInstance.put('/updateaboutus', formdata);
 
       if (res.status == 200) {
-        toast.success('Site Settings Updated SuccessFully');
+        toast.success('About Us Updated SuccessFully');
       }
     } catch (error) {
       if (isAxiosError(error)) {
         toast.error(error.response?.data.message);
       }
     }
-    getaboutus()
+    getaboutus();
   };
 
   const modules = {
@@ -176,7 +176,9 @@ const Aboutus = () => {
                     <button
                       className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
                       type="button"
-                      onClick={()=>{setblogo(null)}}
+                      onClick={() => {
+                        setblogo(null);
+                      }}
                     >
                       Cancel
                     </button>

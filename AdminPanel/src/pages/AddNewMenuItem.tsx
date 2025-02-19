@@ -32,14 +32,14 @@ const AddNewMenuItem = () => {
   };
 
   return (
-    <div className="bg-white w-full h-[80vh] shadow-md flex flex-col  gap-3">
+    <div className="bg-white w-full h-[90vh] shadow-md flex flex-col  gap-3">
       <h1 className="text-center mt-5 p-5 font-bold text-black-0 text-[20px] underline underline-offset-8 ">
         Add New Menu Item
       </h1>
       <div className="flex justify-between w-[80%]">
         <div className="pl-20 flex flex-col gap-5">
           <select
-            className="h-[40px] border"
+            className="h-[40px] rounded-md outline-none bg-slate-100"
             name="category"
             value={data.category}
             onChange={(e) =>
