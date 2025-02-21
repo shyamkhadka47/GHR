@@ -27,27 +27,27 @@ const AddNewService = () => {
     }
   };
 
-  const handleSubmit = async(e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if(!imgsrc){
-      return toast.error("Image Required")
+    if (!imgsrc) {
+      return toast.error('Image Required');
     }
-   const formdata= new FormData()
-   formdata.append("title", data.title)
-   formdata.append("description", data.description)
-   formdata.append("image", imgsrc)
+    const formdata = new FormData();
+    formdata.append('title', data.title);
+    formdata.append('description', data.description);
+    formdata.append('image', imgsrc);
 
-   try {
-    const res= await axiosInstance.post("/addnewservices", formdata)
-    console.log(res)
-    if(res.status==200){
-      return toast.success(res.data.message)
+    try {
+      const res = await axiosInstance.post('/addnewservices', formdata);
+
+      if (res.status == 200) {
+        return toast.success(res.data.message);
+      }
+    } catch (error) {
+      if (isAxiosError(error)) {
+        return toast.error(error.response?.data.message);
+      }
     }
-   } catch (error) {
-    if(isAxiosError(error)){
-      return toast.error(error.response?.data.message)
-    }
-   }
   };
 
   return (
@@ -97,7 +97,7 @@ const AddNewService = () => {
             id="slider-image"
             type="file"
             className="hidden"
-            accept='image/*'
+            accept="image/*"
           />
           <label
             htmlFor="slider-image"

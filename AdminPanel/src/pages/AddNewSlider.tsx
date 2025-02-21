@@ -5,9 +5,7 @@ import { BsUpload } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../hooks/axiosConfig';
 
-
 const AddNewSlider = () => {
- 
   const navigate = useNavigate();
   const [data, setData] = React.useState({
     title: '',
@@ -25,33 +23,33 @@ const AddNewSlider = () => {
     e.preventDefault();
     const Max_Size = 1 * 1024 * 1024;
     if (e.target.files && e.target.files[0]) {
-      if(e.target.files[0].size > Max_Size){
-        return toast.error("File Size Larger Than 1mb")
+      if (e.target.files[0].size > Max_Size) {
+        return toast.error('File Size Larger Than 1mb');
       }
       setImgSrc(e.target.files[0]);
     }
   };
 
-  const handleSubmit = async(e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if(!imgsrc){
-      return toast.error("Image Required")
+    if (!imgsrc) {
+      return toast.error('Image Required Less Than 1 MB');
     }
     try {
-    const formdata= new FormData()
-    formdata.append("title", data.title)
-    formdata.append("slogan", data.slogan)
-    formdata.append("description", data.description)
-    formdata.append("image", imgsrc)
-    const res= await axiosInstance.post("/addnewslider", formdata)
- if(res.status==200){
-  toast.success(res.data.message)
- }
-  } catch (error) {
-    if(isAxiosError(error)){
-      toast.error(error.response?.data.message)
+      const formdata = new FormData();
+      formdata.append('title', data.title);
+      formdata.append('slogan', data.slogan);
+      formdata.append('description', data.description);
+      formdata.append('image', imgsrc);
+      const res = await axiosInstance.post('/addnewslider', formdata);
+      if (res.status == 200) {
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      }
     }
-  }
   };
 
   return (
@@ -108,7 +106,7 @@ const AddNewSlider = () => {
             id="slider-image"
             type="file"
             className="hidden"
-            accept='image/*'
+            accept="image/*"
           />
           <label
             htmlFor="slider-image"
@@ -128,7 +126,7 @@ const AddNewSlider = () => {
           onClick={() => {
             setData({ title: '', slogan: '', description: '' });
             setImgSrc(null);
-            navigate("/slider")
+            navigate('/slider');
           }}
           value={'Cancel'}
           className="bg-red-600 py-3 px-5 rounded-md cursor-pointer text-white"

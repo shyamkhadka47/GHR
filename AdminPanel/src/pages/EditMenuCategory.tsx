@@ -2,12 +2,31 @@ import { isAxiosError } from 'axios';
 import React from 'react';
 import toast from 'react-hot-toast';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../hooks/axiosConfig';
 
-const AddNewMenuCategory = () => {
+const EditMenuCategory = () => {
   const navigate = useNavigate();
-  const [name, setName]: any = React.useState("");
+
+  const { id } = useParams();
+
+  const [name, setName]: any = React.useState('');
+
+  React.useEffect(() => {
+    (async () => {
+      try {
+        const res = await axiosInstance.get(`/getsinglemenucategory/${id}`);
+
+        if (res.status == 200) {
+          setName(res.data.data.name);
+        }
+      } catch (error) {
+        if (isAxiosError(error)) {
+          toast.error(error.response?.data.message);
+        }
+      }
+    })();
+  }, [id]);
 
   // const handleAdd = () => {
   //   if (data.length < 5) {
@@ -33,26 +52,28 @@ const AddNewMenuCategory = () => {
   //   setData(deleted);
   // };
 
-  const handleSubmit = async(e: React.MouseEvent<HTMLInputElement>) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-  
- try {
-   const res= await axiosInstance.post("/addmenucategory", {name})
-   if(res.status==200){
-    setName("")
-    return toast.success(res.data.message)
-   }
- } catch (error) {
-  if(isAxiosError(error)){
-    return toast.error(error?.response?.data.message)
-  }
- }
+    try {
+      const res = await axiosInstance.put(`/updatemenucategory/${id}`, {
+        name,
+      });
+      if (res.status == 200) {
+        toast.success(res.data.message);
+        setName('');
+        navigate('/menu-category');
+      }
+    } catch (error) {
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      }
+    }
   };
 
   return (
     <div className="bg-white w-full h-[80vh] shadow-md flex flex-col items-center gap-3">
       <h1 className="text-center mt-5 p-5 font-bold text-black-0 text-[20px] underline underline-offset-8 ">
-        Add New Menu Category
+        Update Category
       </h1>
 
       {/* {data.length < 5 && (
@@ -71,23 +92,23 @@ const AddNewMenuCategory = () => {
               el: { name: string | number | readonly string[] | undefined },
               i: number,
             ): any => ( */}
-              <div className="flex gap-4 items-center justify-center">
-                <input
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  type="text"
-                  name="name"
-                  className=" rounded-md w-[500px]  h-[60px] p-5 text-black bg-[#f1f3f9] outline-none"
-                  placeholder="Enter Category Name"
-                />
-                {/* <button
+          <div className="flex gap-4 items-center justify-center">
+            <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              type="text"
+              name="name"
+              className=" rounded-md w-[500px]  h-[60px] p-5 text-black bg-[#f1f3f9] outline-none"
+              placeholder="Enter Category Name"
+            />
+            {/* <button
                   className="w-[100px] h-[50px] p-4 bg-red-600 text-white text-center rounded-lg"
                   onClick={(i: any) => handleDelete(i)}
                 >
                   Delete
                 </button> */}
-              </div>
-            {/* ),
+          </div>
+          {/* ),
           )} */}
         </div>
       </div>
@@ -95,7 +116,7 @@ const AddNewMenuCategory = () => {
         <input
           type="submit"
           onClick={() => {
-            setName([{ name: '' }]);
+            setName('');
 
             navigate('/menu-category');
           }}
@@ -105,7 +126,7 @@ const AddNewMenuCategory = () => {
         <input
           type="submit"
           onClick={handleSubmit}
-          value={'Submit'}
+          value={'Update'}
           className="bg-green-800 py-3 px-5 rounded-md cursor-pointer text-white"
         />
       </div>
@@ -113,4 +134,4 @@ const AddNewMenuCategory = () => {
   );
 };
 
-export default AddNewMenuCategory;
+export default EditMenuCategory;

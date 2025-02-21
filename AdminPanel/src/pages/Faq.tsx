@@ -16,6 +16,7 @@ const Faq = () => {
   const getallfaq = async () => {
     try {
       const res = await axiosInstance.get('/getfaq');
+   
       if (res.status == 200) {
         setFaqData(res.data.data);
       }
