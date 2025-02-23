@@ -259,15 +259,25 @@ export function Navbar() {
                 </button>
               </div>
 
+              <hr className="bg-secondaryColor" />
+
               {/* Description */}
-              <p className="text-gray-600 mb-8">
-                Nullam dignissim, ante scelerisque the is euismod fermentum odio
-                sem semper the is erat, a feugiat leo urna eget eros. Duis
-                Aenean a imperdiet risus.
-              </p>
+              <nav className="flex flex-col md:hidden space-y-4 justify-center mt-5">
+                {navigationItems.map((item) => (
+                 <div  key={item.title}> <Link
+                
+                 href={item.href}
+                 className="text-2xl font-medium text-gray-600 relative hover:text-primaryColor before:content-[''] hover:before:w-[50%] before:h-[3px] before:absolute before:bg-secondaryColor before:left-0 before:bottom-[-10px] before:transition-[all] duration-1000 before:ease-in-out before:w-0 "
+               >
+                 {item.title}
+               </Link></div>
+                ))}
+              </nav>
+
+              <hr  className="bg-secondaryColor mt-5"/>
 
               {/* Contact Info */}
-              <div className="space-y-8">
+              <div className="space-y-8 mt-5" >
                 <h3 className="text-xl font-bold">Contact Info</h3>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
