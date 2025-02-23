@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -56,8 +56,24 @@ const socialIcons = {
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  
+  const [isFixed, setIsFixed] = useState(false);
 
+  // Handle scroll event
+  const handleScroll = () => {
+    if (window.scrollY > 200) {
+      setIsFixed(true); // Make the navbar fixed after scrolling 100px
+    } else {
+      setIsFixed(false); // Remove fixed positioning when scrolled back to the top
+    }
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    // Clean up the event listener
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <>
       <div className="">
@@ -124,7 +140,13 @@ export function Navbar() {
         </div>
 
         {/* Main Navigation */}
-        <div className="bg-white ">
+        <div
+          className={`bg-white ${
+            isFixed
+              ? "fixed top-[-100px] left-0 right-0 z-50 shadow-lg transition-all duration-500 transform translate-y-[100px]"
+              : "relative"
+          }`}
+        >
           <div className="px-[5%] md:px-[100px]">
             <div className="flex h-24 items-center justify-between">
               {/* Updated Logo with larger size */}
@@ -136,7 +158,6 @@ export function Navbar() {
                     width={100}
                     height={100}
                     className="object-contain w-auto h-auto"
-                    
                     priority
                   />
                 </div>
