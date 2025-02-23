@@ -67,6 +67,7 @@ export function Navbar() {
     }
   };
   useEffect(() => {
+    handleScroll()
     window.addEventListener("scroll", handleScroll);
 
     // Clean up the event listener
