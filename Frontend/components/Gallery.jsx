@@ -45,13 +45,13 @@ export function Gallery() {
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12">
           <div>
-            <div className="inline-flex items-center text-[#82B440] font-medium mb-4">
+            <div className="relative inline-flex items-center text-primaryColor font-medium mb-4">
               <span className="mr-2">
                 <svg viewBox="0 0 6 6" className="w-1.5 h-1.5 fill-current">
                   <rect width="6" height="6" />
                 </svg>
               </span>
-              <span className="text-sm tracking-wider">LATEST GALLERY</span>
+              <span className="text-3xl md:text-[4vw] lg:text-[2vw] tracking-wider sm:before:content-[''] sm:before:absolute sm:before:w-full sm:before:h-1 sm:before:z-[2] sm:before:bg-primaryColor sm:before:bottom-[-5px]  ">LATEST GALLERY</span>
             </div>
             <h2 className="text-3xl lg:text-4xl font-bold leading-tight">
               Your Satisfaction Is Our Top Priority

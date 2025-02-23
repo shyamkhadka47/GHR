@@ -2,7 +2,7 @@ import Image from "next/image"
 
 export function Aboutus() {
   return (
-    <div className=" px-[10%] md:px[100px] py-16 lg:py-24">
+    <div className=" px-[10%] md:px[100px] pt-24 py-16">
       <div className="grid gap-8 lg:grid-cols-2 lg:gap-16 items-center">
         {/* Image Section */}
         <div className="relative h-[400px] lg:h-[600px] rounded-lg overflow-hidden ">
@@ -25,7 +25,7 @@ export function Aboutus() {
                 <rect width="6" height="6" />
               </svg>
             </span>
-            <span className="text-2xl text-primaryColor tracking-wider">ABOUT US</span>
+            <span className="text-3xl md:text-[4vw] lg:text-[2vw] text-primaryColor tracking-wider">ABOUT US</span>
           </div>
 
           <h2 className="text-3xl lg:text-4xl font-bold leading-tight mb-6">

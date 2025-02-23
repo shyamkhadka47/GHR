@@ -33,7 +33,7 @@ export function FAQ() {
   const [openId, setOpenId] = useState("01");
 
   return (
-    <div className="flex gap-5 lg:gap-20 flex-col lg:flex-row justify-center px-[5%] md:px-[100px] py-16 lg:py-24">
+    <div className="flex gap-5 lg:gap-20 flex-col lg:flex-row justify-center container px-[5%] md:px-[100px] py-16 lg:py-24">
         <div className="h-[600px] sm:min-w-[300px]">
             <Image src="/gb5.jpg" alt="Gokarna Hill Side Resort" width={1800} height={1200} className="w-auto h-full object-cover" priority />
         </div>

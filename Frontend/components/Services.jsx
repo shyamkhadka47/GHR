@@ -35,13 +35,13 @@ const services = [
 
 export function Services() {
   return (
-    <section className="px-[5%] md:px-[100px] py-16 lg:py-24">
+    <section className="container px-[5%] md:px-[100px] py-16">
       <div className=" px-4">
         {/* Section Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 mb-3">
             <div className="w-1.5 h-1.5 bg-secondaryColor" />
-            <span className="text-secondaryColor text-xl font-medium tracking-wider">
+            <span className="text-3xl md:text-[4vw] lg:text-[2vw] text-secondaryColor font-medium tracking-wider">
               OUR AMENITIES
             </span>
           </div>

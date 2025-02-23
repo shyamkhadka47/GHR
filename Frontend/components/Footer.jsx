@@ -46,7 +46,7 @@ export function Footer() {
     <footer className="bg-[#0B1223] relative">
       {/* Main Footer Content */}
       <div className="px-5% md:px-[100px] py-16 relative">
-        <div className="grid px-[10%] md:pl-0 gap-x-20 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid px-[10%] md:pl-0 gap-x-20 gap-y-10 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
           {/* Logo & Description */}
           <div className="space-y-6 ">
             <Link href="/" className="flex items-center space-x-2">

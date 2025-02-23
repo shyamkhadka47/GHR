@@ -41,18 +41,18 @@ const testimonials = [
 
 export function Testimonials() {
   return (
-    <section className="py-16 lg:py-24 overflow-hidden w-full">
+    <section className="py-8 overflow-hidden w-full">
       <div className="container mx-auto px-[5%] md:px-[100px]">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12">
           <div>
-            <div className="inline-flex items-center text-[#82B440] font-medium mb-4">
+            <div className="relative inline-flex items-center text-primaryColor font-medium mb-4">
               <span className="mr-2">
                 <svg viewBox="0 0 6 6" className="w-1.5 h-1.5 fill-current">
                   <rect width="6" height="6" />
                 </svg>
               </span>
-              <span className="text-sm tracking-wider">CLIENTS TESTIMONIALS</span>
+              <span className="text-3xl md:text-[4vw] lg:text-[2vw] tracking-wider sm:before:content-[''] sm:before:absolute sm:before:w-full sm:before:h-1 sm:before:z-[2] sm:before:bg-primaryColor sm:before:bottom-[-5px]  ">CLIENTS TESTIMONIALS</span>
             </div>
             <h2 className="text-3xl lg:text-4xl font-bold leading-tight">
               What Our Customers Say About
