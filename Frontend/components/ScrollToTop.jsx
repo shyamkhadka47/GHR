@@ -8,7 +8,7 @@ export function ScrollToTop() {
 
   // Show button when page is scrolled past hero section (100vh)
   const toggleVisibility = useCallback(() => {
-    if (window.scrollY > window.innerHeight) {
+    if (window.scrollY > window.innerHeight - 600) {
       setIsVisible(true)
     } else {
       setIsVisible(false)

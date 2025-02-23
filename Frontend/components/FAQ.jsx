@@ -65,8 +65,8 @@ export function FAQ() {
                 className="flex items-center justify-between w-full p-5 text-left"
               >
                 <div className="flex items-center space-x-4">
-                  <span className="text-[#82B440] font-medium">{faq.id}.</span>
-                  <span className="font-medium hover:text-[#82B440] transition-colors">
+                  <span className="text-primaryColor font-medium">{faq.id}.</span>
+                  <span className="font-medium hover:text-secondaryColor transition-colors">
                     {faq.question}
                   </span>
                 </div>

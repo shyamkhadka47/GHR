@@ -61,9 +61,9 @@ export function Gallery() {
           </div>
           <a
             href="#"
-            className="inline-flex items-center bg-[#82B440] text-white px-6 py-3 mt-6 lg:mt-0 rounded hover:bg-[#72a038] transition-colors"
+            className="inline-flex items-center bg-primaryColor text-white px-6 py-3 mt-6 lg:mt-0 rounded hover:bg-secondaryColor transition-colors"
           >
-            All Projects
+            View Gallery
             <ChevronRight className="ml-2 w-4 h-4" />
           </a>
         </div>
