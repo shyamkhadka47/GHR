@@ -3,7 +3,7 @@ import authController from "../controllers/authController.js";
 import protect from "../middleware/authCheck.js";
 import siteSettingController from "../controllers/siteSettingController.js";
 import { aboutupload, galleryupload, logoupload, serviceupload, sliderupload, testimonialupload } from "../multerStorage/multer-config.js";
-import faqController from "../controllers/faqcontroller.js";
+import faqController from "../controllers/faqController.js"
 import sliderController from "../controllers/sliderController.js";
 import userqueryController from "../controllers/userqueryController.js";
 import serviceController from "../controllers/serviceController.js";
