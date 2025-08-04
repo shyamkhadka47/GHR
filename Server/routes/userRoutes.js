@@ -2,7 +2,7 @@ import express from "express";
 import authController from "../controllers/authController.js";
 import protect from "../middleware/authCheck.js";
 import siteSettingController from "../controllers/siteSettingController.js";
-import { aboutupload, galleryupload, logoupload, serviceupload, sliderupload, testimonialupload } from "../multerStorage/multer-config.js";
+import { aboutupload, galleryupload, logoupload, menuupload, serviceupload, sliderupload, testimonialupload } from "../multerStorage/multer-config.js";
 import faqController from "../controllers/faqController.js"
 import sliderController from "../controllers/sliderController.js";
 import userqueryController from "../controllers/userqueryController.js";
@@ -11,6 +11,7 @@ import testimonialController from "../controllers/testimonialController.js";
 import galleryController from "../controllers/galleryController.js";
 import aboutController from "../controllers/aboutController.js";
 import menuCategoryController from "../controllers/menuCategoryController.js";
+import menuController from "../controllers/menuController.js";
 
 
 const Router = express.Router();
@@ -79,6 +80,13 @@ Router.get("/getallmenucategory", menuCategoryController.getAllMenuCategory)
 Router.get("/getsinglemenucategory/:id", menuCategoryController.getSingleMenuCategory)
 Router.put("/updatemenucategory/:id", protect, menuCategoryController.updateMenuCategory)
 Router.delete("/deletemenucategory/:id", protect, menuCategoryController.deleteMenuCategory)
+
+// MENU API
+Router.post("/addmenu", protect, menuupload.single("image"), menuController.addMenu)
+Router.get("/getallmenu", menuController.getAllMenu)
+Router.get("/getsinglemenu/:id", menuController.getSingleMenu)
+Router.put("/updatemenu/:id", protect,menuupload.single("image"), menuController.updateMenu)
+Router.delete("/deletemenu/:id", protect, menuController.deleteMenu)
 
 
 

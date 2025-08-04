@@ -17,6 +17,7 @@ app.use(express.static("public/service"))
 app.use(express.static("public/testimonial"))
 app.use(express.static("public/gallery"))
 app.use(express.static("public/about"))
+app.use(express.static("public/menu"))
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

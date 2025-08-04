@@ -6,6 +6,9 @@ class galleryController {
   static addNewGallery = async (req, res) => {
     const { description, caption } = req.body;
     const { filename } = req.file;
+    if(!req.file){
+      return 
+    }
     if (!description || !caption) {
       if (filename) {
         fs.unlink(`public/gallery/${filename}`, (err) => {

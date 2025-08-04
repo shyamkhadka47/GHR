@@ -93,6 +93,7 @@ class aboutController {
   static updateAboutUs = async (req, res) => {
     const { title, content } = req.body;
     const filename = req.file?.filename;
+    console.log(filename)
     try {
       if (!filename) {
         return res.status(400).json({

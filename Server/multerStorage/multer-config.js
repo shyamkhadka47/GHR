@@ -52,6 +52,14 @@ const aboutStorage = multer.diskStorage({
     cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
+export const menuStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/menu");
+  },
+  filename: function (req, file, cb) {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
 export const logoupload = multer({
   storage: storage,
   limits: { fileSize: 1 * 1024 * 1024 },
@@ -78,5 +86,9 @@ export const galleryupload = multer({
 
 export const aboutupload = multer({
   storage: aboutStorage,
+  limits: { fileSize: 1 * 1024 * 1024 },
+});
+export const menuupload = multer({
+  storage: menuStorage,
   limits: { fileSize: 1 * 1024 * 1024 },
 });

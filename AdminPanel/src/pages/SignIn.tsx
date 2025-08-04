@@ -1,13 +1,15 @@
 import axios, { isAxiosError } from 'axios';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../common/Loader';
 
 const SignIn: React.FC = () => {
   const [data, setData] = React.useState({
     email: '',
     password: '',
   });
+  const [loading,setLoading]=useState<Boolean | null>(true)
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -29,6 +31,34 @@ const SignIn: React.FC = () => {
       }
     }
   };
+  useEffect(()=>{
+
+    (async function(){
+      try {
+        const res= await axios.post(`${import.meta.env.VITE_BACKEND_URL}/me`,'', {
+          headers: {Authorization:`Bearer ${localStorage.getItem('token')}`}
+        })
+        if(res.status ==200){
+         return navigate("/dashboard")
+        }
+        else{
+          return navigate("/")
+        }
+      } catch (error) {
+     
+        localStorage.removeItem('token')
+        navigate("/")
+      }
+      finally{
+        setLoading(false)
+      }
+    })()
+  },[])
+
+  if(loading){
+    return <><Loader/></>
+  }
+
   return (
     <>
       <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
