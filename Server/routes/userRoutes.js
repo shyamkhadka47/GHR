@@ -84,9 +84,9 @@ Router.delete("/deletemenucategory/:id", protect, menuCategoryController.deleteM
 // MENU API
 Router.post("/addmenu", protect, menuupload.single("image"), menuController.addMenu)
 Router.get("/getallmenu", menuController.getAllMenu)
-Router.get("/getsinglemenu/:id", menuController.getSingleMenu)
-Router.put("/updatemenu/:id", protect,menuupload.single("image"), menuController.updateMenu)
-Router.delete("/deletemenu/:id", protect, menuController.deleteMenu)
+Router.get("/getsinglemenu/:slug", menuController.getSingleMenu)
+Router.put("/updatemenu/:slug", protect,menuupload.single("image"), menuController.updateMenu)
+Router.delete("/deletemenu/:slug", protect, menuController.deleteMenu)
 
 
 
