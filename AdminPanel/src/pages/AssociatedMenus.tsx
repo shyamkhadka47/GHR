@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useCheckLocalColor } from '../hooks/useCheckLocalColor';
 import { isAxiosError } from 'axios';
 import toast from 'react-hot-toast';
@@ -25,20 +25,24 @@ interface MenuItemData {
   };
 }
 
-const MenuItem = () => {
+const AssociatedMenus = () => {
+  const { catid } = useParams();
   const { color } = useCheckLocalColor();
   const [data, setData] = useState<MenuItemData[]>([]);
   const [id, setId] = useState<string>('');
   const [show, setShow] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [catname, setCatname] = useState<string | null>(null);
 
   // Fetch menu items data from API
   const getMenuItems = async () => {
     try {
       setLoading(true);
-      const res = await axiosInstance.get('/getallmenu');
+      const res = await axiosInstance.get('/getsinglemenucategory/' + catid);
+
       if (res.status === 200) {
-        setData(res.data.data); // Assuming the response is structured like { data: [ ... ] }
+        setCatname(res.data.data.name);
+        setData(res.data.data.items); // Assuming the response is structured like { data: [ ... ] }
       }
     } catch (error) {
       if (isAxiosError(error)) {
@@ -69,6 +73,7 @@ const MenuItem = () => {
   const handleDelete = async (slug: string) => {
     try {
       const res = await axiosInstance.delete(`/deletemenu/${slug}`);
+      console.log(res);
       if (res.status === 200) {
         setShow(false);
         setId('');
@@ -83,11 +88,19 @@ const MenuItem = () => {
   };
 
   // Table Row Component to avoid repetition
-  const TableRow = ({ menuItem, index }: { menuItem: MenuItemData; index: number }) => (
+  const TableRow = ({
+    menuItem,
+    index,
+  }: {
+    menuItem: MenuItemData;
+    index: number;
+  }) => (
     <tr className="hover:bg-slate-50 border-b border-slate-200">
       <td className="p-4 py-5 border border-r text-center">{index + 1}</td>
       <td className="p-4 py-5 border border-r text-center">{menuItem.title}</td>
-      <td className="p-4 py-5 border border-r text-center">{menuItem.description}</td>
+      <td className="p-4 py-5 border border-r text-center">
+        {menuItem.description}
+      </td>
       <td className="p-4 py-5 border border-r text-center">{menuItem.price}</td>
       <td className="p-4 py-5 border border-r text-center">
         <img
@@ -96,7 +109,10 @@ const MenuItem = () => {
           className="w-[50px] h-[50px] object-cover"
         />
       </td>
-      <td className="p-4 py-5 border border-r text-center">{menuItem.menuCategory?.name || 'No Category'}</td> {/* Display Category */}
+      <td className="p-4 py-5 border border-r text-center">
+        {catname || 'No Category'}
+      </td>{' '}
+      {/* Display Category */}
       <td className="text-center">
         <Link to={`/edit-menu-item/${menuItem.slug}`}>
           <button className="px-4 py-1 text-sm font-medium mr-1 text-white bg-green-900 rounded">
@@ -118,22 +134,33 @@ const MenuItem = () => {
 
   return (
     <>
-      {show && <Modal show={show} setshow={setShow} id={id} handleDelete={handleDelete} />}
+      {show && (
+        <Modal
+          show={show}
+          setshow={setShow}
+          id={id}
+          handleDelete={handleDelete}
+        />
+      )}
       <div className="mt-[-45px]">
         <div className="flex flex-col gap-5 relative">
-          <Link to="/add-new-menu">
+          {/* <Link to="/add-new-menu">
             <button
               className={`${color === 'dark' ? 'hover:bg-white hover:text-black' : ''} bg-green-900 text-white w-[200px] font-bold py-4 hover:bg-transparent hover:border-[2px] hover:border-green-600 hover:text-black absolute right-[0] top-5`}
             >
               Add New Menu Item
             </button>
-          </Link>
+          </Link> */}
 
           <div className="mt-[20px]">
             <div className="max-w-[1020px] mx-auto">
               <div className="w-full flex justify-between items-center mb-5 mt-1 pl-3">
-                <h3 className={`${color === 'dark' ? 'text-white' : 'text-black'} text-[25px] font-semibold`}>
-                  View All Menu Items
+                <h3
+                  className={`${
+                    color === 'dark' ? 'text-white' : 'text-black'
+                  } text-[25px] font-semibold`}
+                >
+                  View Menu Items
                 </h3>
               </div>
 
@@ -142,25 +169,38 @@ const MenuItem = () => {
                   <thead className="py-4">
                     <tr>
                       {columns.map((el, i) => (
-                        <th className="p-4 border-b border-slate-200 bg-green-900 border-r" key={i}>
-                          <p className="text-sm font-normal leading-none text-white">{el.title}</p>
+                        <th
+                          className="p-4 border-b border-slate-200 bg-green-900 border-r"
+                          key={i}
+                        >
+                          <p className="text-sm font-normal leading-none text-white">
+                            {el.title}
+                          </p>
                         </th>
                       ))}
                       <th className="p-4 border-b border-slate-200 bg-green-900 border-r">
-                        <p className="text-sm font-normal leading-none text-white text-center">Actions</p>
+                        <p className="text-sm font-normal leading-none text-white text-center">
+                          Actions
+                        </p>
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {data?.map((menuItem, index) => (
-                      <TableRow key={menuItem._id} menuItem={menuItem} index={index} />
-                    ))}
+                    {Array.isArray(data) && data.length > 0 ? (
+                      data.map((menuItem, index) => (
+                        <TableRow
+                          key={menuItem._id}
+                          menuItem={menuItem}
+                          index={index}
+                        />
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={columns.length}>No Menu Items Found</td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
-
-                <div className="mt-4 text-center">
-                  {data.length === 0 && !loading && <p>No Menu Items found</p>}
-                </div>
               </div>
             </div>
           </div>
@@ -170,4 +210,4 @@ const MenuItem = () => {
   );
 };
 
-export default MenuItem;
+export default AssociatedMenus;

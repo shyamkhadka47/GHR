@@ -1,7 +1,8 @@
-import fs from "fs/promises";
+import fs from "fs";
 import mongoose from "mongoose";
-import menucategorymodel from "../models/menucategorymodel";
-import menumodel from "../models/menumodel";
+import menucategorymodel from "../models/menucategorymodel.js";
+import menumodel from "../models/menumodel.js";
+import slugify from "slugify";
 class menuController {
   // DELETE IMAGE
   static async deleteImage(filename) {
@@ -17,6 +18,20 @@ class menuController {
   static addMenu = async (req, res) => {
     const { title, description, price, menuCategory } = req.body;
     const filename = req.file?.filename;
+
+    if (!req.file) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Image Required Less Than 1Mb" });
+    }
+    if (req.file && req.file.size > 1 * 1024 * 1024) {
+      await menuController.deleteImage(filename);
+
+      return res.status(400).json({
+        success: false,
+        message: "File Larger Than 1 MB from backend",
+      });
+    }
 
     if (!title || !description || !price || !menuCategory || !filename) {
       if (filename) {
@@ -71,6 +86,7 @@ class menuController {
         .status(200)
         .json({ success: true, message: "Menu Created Successfully" });
     } catch (error) {
+      console.log(error);
       if (filename) {
         await menuController.deleteImage(filename);
       }
@@ -236,26 +252,29 @@ class menuController {
   };
   static deleteMenu = async (req, res) => {
     const { slug } = req.params;
-  
+
     if (!slug) {
-      return res.status(400).json({ success: false, message: "Slug is required" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Slug is required" });
     }
-  
+
     try {
       const menu = await menumodel.findOne({ slug });
       if (!menu) {
-        return res.status(404).json({ success: false, message: "Menu not found" });
+        return res
+          .status(404)
+          .json({ success: false, message: "Menu not found" });
       }
-  
+
       const category = await menucategorymodel.findById(menu.menuCategory);
       if (category) {
         category.items.pull(menu._id);
         await category.save();
       }
-  
-      
+
       await menumodel.findByIdAndDelete(menu._id);
-      
+
       if (menu.menuImage) {
         await menuController.deleteImage(menu.menuImage);
       }
@@ -270,7 +289,6 @@ class menuController {
       });
     }
   };
-  
 }
 
 export default menuController;

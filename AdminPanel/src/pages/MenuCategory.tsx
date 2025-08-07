@@ -125,6 +125,12 @@ const MenuCategory = () => {
 
                         <td className="p-4 py-5 border border-r">
                           <p className=" font-semibold text-sm text-black flex items-center justify-center gap-4">
+                           
+                          <Link to={`/associated-menus/${el._id}`}>
+                              <button className="px-4 py-1 text-sm font-medium text-white bg-blue-700 rounded">
+                                Associated Menus
+                              </button>
+                            </Link>
                             <Link to={`/edit-menu-category/${el._id}`}>
                               <button className="px-4 py-1 text-sm font-medium text-white bg-green-900 rounded">
                                 Edit

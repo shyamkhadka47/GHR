@@ -77,7 +77,7 @@ Router.put("/updateaboutus", protect, aboutupload.single("image"), aboutControll
 // MENU CATEGORY API
 Router.post("/addmenucategory",protect,menuCategoryController.addMenuCategory)
 Router.get("/getallmenucategory", menuCategoryController.getAllMenuCategory)
-Router.get("/getsinglemenucategory/:id", menuCategoryController.getSingleMenuCategory)
+Router.get("/getsinglemenucategory/:catid", menuCategoryController.getSingleMenuCategory)
 Router.put("/updatemenucategory/:id", protect, menuCategoryController.updateMenuCategory)
 Router.delete("/deletemenucategory/:id", protect, menuCategoryController.deleteMenuCategory)
 

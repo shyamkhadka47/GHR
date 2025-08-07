@@ -33,6 +33,8 @@ import EditService from './pages/EditService';
 import EditTestimonials from './pages/EditTestimonials';
 import EditGallery from './pages/EditGallery';
 import EditMenuCategory from './pages/EditMenuCategory';
+import EditMenu from './pages/EditMenu';
+import AssociatedMenus from './pages/AssociatedMenus';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -94,8 +96,13 @@ function App() {
             path="/edit-menu-category/:id"
             element={<EditMenuCategory />}
           />
+          <Route
+            path="/associated-menus/:catid"
+            element={<AssociatedMenus />}
+          />
           <Route path="/menu-item" element={<MenuItem />} />
-          <Route path="/add-new-menu-item" element={<AddNewMenuItem />} />
+          <Route path="/add-new-menu" element={<AddNewMenuItem />} />
+          <Route path="/edit-menu-item/:slug" element={<EditMenu />} />
           <Route
             path="/about-us"
             element={

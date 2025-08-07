@@ -1,13 +1,37 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { BsUpload } from 'react-icons/bs';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../hooks/axiosConfig';
 import { isAxiosError } from 'axios';
 import toast from 'react-hot-toast';
+import { downloadImage } from '../hooks/convertImageToFile';
 
-const AddNewMenuItem = () => {
-  const getallcategory = async () => {
+const EditMenu = () => {
+  const { slug } = useParams();
+
+  const getsinglemenu = async () => {
+    try {
+      const res = await axiosInstance.get(`/getsinglemenu/${slug}`);
+      console.log(res)
+      const imagefile= await downloadImage(res?.data?.data?.menuImage)
+      if (res.status == 200) {
+        setData(() => ({
+          name: res.data?.data?.title,
+          price: res.data?.data?.price,
+          description: res.data?.data?.price,
+          category:res.data?.data?.menuCategory?._id
+        }));
+       setImgSrc(imagefile)
+      }
+    } catch (error) {
+      if (isAxiosError(error)) {
+        return toast.error(error.response?.data.message);
+      }
+    }
+  };
+
+  const getallmenucategory = async () => {
     try {
       const res = await axiosInstance.get('/getallmenucategory');
 
@@ -16,10 +40,11 @@ const AddNewMenuItem = () => {
       }
     } catch (error) {
       if (isAxiosError(error)) {
-        return toast.error(error.response?.data.message);
+        toast.error(error.response?.data.message);
       }
     }
   };
+
   const navigate = useNavigate();
   const [catdata, setCatData]: any = React.useState();
 
@@ -31,7 +56,8 @@ const AddNewMenuItem = () => {
   });
 
   React.useEffect(() => {
-    getallcategory();
+    getsinglemenu();
+    getallmenucategory();
   }, []);
   const [imgsrc, setImgSrc] = React.useState<File | null>(null);
 
@@ -66,7 +92,7 @@ const AddNewMenuItem = () => {
       formdata.append('image', imgsrc);
     }
     try {
-      const res = await axiosInstance.post('/addmenu', formdata);
+      const res = await axiosInstance.put(`/updatemenu/${slug}`, formdata);
 
       if ((res.status = 200)) {
         return toast.success(res.data.message);
@@ -132,7 +158,7 @@ const AddNewMenuItem = () => {
             <input
               value={data.price}
               onChange={(e) => handleChange(e)}
-              type="number"
+              type="text"
               name="price"
               className="rounded-md w-full h-[60px] p-5 text-black bg-[#f1f3f9] outline-none"
               placeholder="Enter Price of Item"
@@ -212,4 +238,4 @@ const AddNewMenuItem = () => {
   );
 };
 
-export default AddNewMenuItem;
+export default EditMenu;

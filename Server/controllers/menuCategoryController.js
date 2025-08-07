@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import menucategorymodel from "../models/menucategorymodel.js";
 
 class menuCategoryController {
@@ -10,7 +11,7 @@ class menuCategoryController {
           .status(400)
           .json({ success: false, message: "Please Add Menu Category Name" });
       }
-      const findmenucategory = await menucategorymodel.find({name});
+      const findmenucategory = await menucategorymodel.find({ name });
       if (findmenucategory.length > 0) {
         return res
           .status(400)
@@ -33,68 +34,110 @@ class menuCategoryController {
       });
     }
   };
-  static getAllMenuCategory= async(req, res)=>{
-    
+  static getAllMenuCategory = async (req, res) => {
     try {
-      const findmenucategory= await menucategorymodel.find().sort({createdAt:-1})
-      
-      if(!findmenucategory){
-        return res.status(400).json({success:false, message:"There are No Menu Category Please Add Category"})
-      }
-      return res.status(200).json({success:true, data:findmenucategory})
+      const findmenucategory = await menucategorymodel
+        .find()
+        .sort({ createdAt: -1 });
 
+      if (!findmenucategory) {
+        return res.status(400).json({
+          success: false,
+          message: "There are No Menu Category Please Add Category",
+        });
+      }
+      return res.status(200).json({ success: true, data: findmenucategory });
     } catch (error) {
-      return res.status(500).json({success:false, message:"Internal Server Error Please Try Again"})
+      return res.status(500).json({
+        success: false,
+        message: "Internal Server Error Please Try Again",
+      });
     }
-  }
-  static getSingleMenuCategory= async(req, res)=>{
-    const {id}= req.params
+  };
+  static getSingleMenuCategory = async (req, res) => {
+    const { catid } = req.params;
     try {
-      if(!id){
-        return res.status(400).json({success:false, message:"Please Choose Valid Id"})
+      if (!catid) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Please Choose Valid Id" });
       }
-      const findmenucategory= await menucategorymodel.findById(id)
-      if(!findmenucategory){
-        return res.status(400).json({success:false, message:"Menu Category Not Found"})
+      const findmenucategory = await menucategorymodel
+        .findById(catid)
+        .populate("items");
+      if (!findmenucategory) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Menu Category Not Found" });
       }
-      return res.status(200).json({success:true, data:findmenucategory})
+      return res.status(200).json({ success: true, data: findmenucategory });
     } catch (error) {
-      return res.status(500).json({success:false, message:"Internal Server Error Please Try Again"})
+      return res.status(500).json({
+        success: false,
+        message: "Internal Server Error Please Try Again",
+      });
     }
-  }
-  static updateMenuCategory= async(req, res)=>{
- 
-    const {id}= req.params
+  };
+  static updateMenuCategory = async (req, res) => {
+    const { id } = req.params;
     try {
-      if(!id){
-        return res.status(400).json({success:false, message:"Please Choose Valid Id To Update"})
+      if (!id) {
+        return res.status(400).json({
+          success: false,
+          message: "Please Choose Valid Id To Update",
+        });
       }
-      const findmenucategory= await menucategorymodel.findByIdAndUpdate(id, {...req.body}, {new:true})
-      if(!findmenucategory){
-        return res.status(400).json({success:false, message:"No Such Category Available"})
+      const findmenucategory = await menucategorymodel.findByIdAndUpdate(
+        id,
+        { ...req.body },
+        { new: true }
+      );
+      if (!findmenucategory) {
+        return res
+          .status(400)
+          .json({ success: false, message: "No Such Category Available" });
       }
-      return res.status(200).json({success:true, message:"Category Updated Successfully"})
-      
+      return res
+        .status(200)
+        .json({ success: true, message: "Category Updated Successfully" });
     } catch (error) {
-      return res.status(500).json({success:false, message:"Internal Server Error Please Try Again"})
+      return res.status(500).json({
+        success: false,
+        message: "Internal Server Error Please Try Again",
+      });
     }
-  }
-  static deleteMenuCategory= async(req, res)=>{
-    const {id}= req.params
+  };
+  static deleteMenuCategory = async (req, res) => {
+    const { id } = req.params;
     try {
-      
-      if(!id){
-        return res.status(400).json({success:false, message:"Please Choose Valid Id To Delete"})
+      if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "Please Choose Valid Id To Delete",
+        });
       }
-      const deletemenucategory= await menucategorymodel.findByIdAndDelete(id)
-      if(!deletemenucategory){
-        return res.status(400).json({success:false, message:"Error Deleting Category"})
+      const findmenucategory = await menucategorymodel.findById(id);
+      if (findmenucategory.items.length > 0) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Please Delete Associated Menus" });
       }
-      return res.status(200).json({success:true, message:"Category Deleted Successfully"})
+      const deletemenucategory = await menucategorymodel.findByIdAndDelete(id);
+      if (!deletemenucategory) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Error Deleting Category" });
+      }
+      return res
+        .status(200)
+        .json({ success: true, message: "Category Deleted Successfully" });
     } catch (error) {
-      return res.status(500).json({success:false, message:"Internal Server Error Please Try Again"})
+      return res.status(500).json({
+        success: false,
+        message: "Internal Server Error Please Try Again",
+      });
     }
-  }
+  };
 }
 
 export default menuCategoryController;
