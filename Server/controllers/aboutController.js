@@ -93,7 +93,7 @@ class aboutController {
   static updateAboutUs = async (req, res) => {
     const { title, content } = req.body;
     const filename = req.file?.filename;
-    console.log(filename)
+
     try {
       if (!filename) {
         return res.status(400).json({
@@ -161,12 +161,10 @@ class aboutController {
           console.log(error);
         }
       }
-      return res
-        .status(500)
-        .json({
-          success: false,
-          message: "Internal Server Error Please Try Again",
-        });
+      return res.status(500).json({
+        success: false,
+        message: "Internal Server Error Please Try Again",
+      });
     }
   };
 }
