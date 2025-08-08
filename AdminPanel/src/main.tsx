@@ -22,6 +22,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       </Router>
       </QueryClientProvider>
     {/* </React.StrictMode> */}
-    ,
+    
   </ColorModeProvider>,
 );
