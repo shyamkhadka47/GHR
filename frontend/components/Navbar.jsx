@@ -6,13 +6,13 @@ import Link from "next/link";
 
 // Navigation Links Array
 const navLinks = [
-  { href: "#", label: "Home" },
-  { href: "#about", label: "About Us" },
-  { href: "#services", label: "Services" },
-  { href: "#gallery", label: "Gallery" },
-  { href: "#menu", label: "Menus" },
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About Us" },
+  { href: "/services", label: "Services" },
+  { href: "/gallery", label: "Gallery" },
+  { href: "/menu", label: "Menus" },
 
-  { href: "#contact", label: "Contact Us" },
+  { href: "/contact", label: "Contact Us" },
 ];
 
 const Navbar = () => {
@@ -21,7 +21,7 @@ const Navbar = () => {
   return (
     <header className=" fixed top-0 w-full z-[999] border-b-[1px] border-b-plight/25 shadow-sm">
       {/* Top Info Bar */}
-      <div className="bg-primary text-white py-2 text-sm">
+      <div className="bg-primary text-white py-3 text-sm">
         <div className="px-[5%] md:px-[10%]">
           <div className="flex flex-wrap justify-between items-center">
             <div className="flex items-center space-x-4">
@@ -67,22 +67,22 @@ const Navbar = () => {
 
             {/* Desktop Menu */}
             <div className="hidden lg:flex items-center space-x-8">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
+              {navLinks.map((link, i) => (
+                <Link
+                  key={i}
                   href={link.href}
                   className="text-foreground font-semibold hover:text-primary transition-colors"
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
             </div>
 
             {/* CTA Button & Mobile Menu Button */}
             <div className="flex items-center space-x-4">
-              <button className="hidden md:flex bg-primary hover:bg-primary-dark text-white px-5 py-2 rounded-md font-medium transition-all">
+              <Link href={"/budget-calculator"} className="hidden md:flex bg-primary hover:bg-primary-dark text-white px-5 py-2 rounded-md font-medium transition-all">
                 Budget Calculator
-              </button>
+              </Link>
 
               <button
                 className="lg:hidden"
@@ -110,9 +110,9 @@ const Navbar = () => {
                     {link.label}
                   </a>
                 ))}
-                <button className="bg-primary hover:bg-primary-dark text-white px-5 py-2 rounded-md font-medium transition-all w-fit">
+                <Link href={"/budget-calculator"} className="bg-primary hover:bg-primary-dark text-white px-5 py-2 rounded-md font-medium transition-all w-fit">
                  Budget Calculator
-                </button>
+                </Link>
               </div>
             </div>
           )}
