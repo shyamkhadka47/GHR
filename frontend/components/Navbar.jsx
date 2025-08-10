@@ -19,7 +19,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="relative">
+    <header className=" fixed top-0 w-full z-[999] border-b-[1px] border-b-plight/25 shadow-sm">
       {/* Top Info Bar */}
       <div className="bg-primary text-white py-2 text-sm">
         <div className="px-[5%] md:px-[10%]">

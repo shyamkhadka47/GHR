@@ -29,7 +29,7 @@ class menuController {
 
       return res.status(400).json({
         success: false,
-        message: "File Larger Than 1 MB from backend",
+        message: "File Larger Than 1 MB",
       });
     }
 

@@ -2,7 +2,7 @@ import express from "express";
 import authController from "../controllers/authController.js";
 import protect from "../middleware/authCheck.js";
 import siteSettingController from "../controllers/siteSettingController.js";
-import { aboutupload, galleryupload, logoupload, menuupload, serviceupload, sliderupload, testimonialupload } from "../multerStorage/multer-config.js";
+import { aboutupload, galleryupload, logoupload, menuupload, serviceupload, sliderupload, testimonialupload, whychooseusupload } from "../multerStorage/multer-config.js";
 import faqController from "../controllers/faqController.js"
 import sliderController from "../controllers/sliderController.js";
 import userqueryController from "../controllers/userqueryController.js";
@@ -12,6 +12,7 @@ import galleryController from "../controllers/galleryController.js";
 import aboutController from "../controllers/aboutController.js";
 import menuCategoryController from "../controllers/menuCategoryController.js";
 import menuController from "../controllers/menuController.js";
+import whyChooseUsController from "../controllers/whyChooseUsController.js";
 
 
 const Router = express.Router();
@@ -87,6 +88,14 @@ Router.get("/getallmenu", menuController.getAllMenu)
 Router.get("/getsinglemenu/:slug", menuController.getSingleMenu)
 Router.put("/updatemenu/:slug", protect,menuupload.single("image"), menuController.updateMenu)
 Router.delete("/deletemenu/:slug", protect, menuController.deleteMenu)
+
+
+// WHYCHOOSEUS API
+Router.post("/addwhychooseus", protect, whychooseusupload.array("photos", 3),whyChooseUsController.addwhychooseus )
+Router.get("/getallwhychooseus", whyChooseUsController.getwhychooseus)
+// Router.get()
+Router.put("/updatewhychooseus/:id", protect, whychooseusupload.array("photos", 3), whyChooseUsController.updatewhychooseus )
+// Router.delete()
 
 
 

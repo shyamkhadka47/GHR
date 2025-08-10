@@ -65,6 +65,28 @@ export const logoupload = multer({
   limits: { fileSize: 1 * 1024 * 1024 },
 });
 
+export const whychooseusstorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/whychooseus");
+  },
+  filename: function (req, file, cb) {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  const allowedMimeTypes = ["image/jpeg", "image/png", "image/webp"];
+
+  if (allowedMimeTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    // Mark error flag but don't stop Multer
+    req.fileValidationError =
+      "Only .jpg, .jpeg, .png, and .webp formats are allowed!";
+    cb(null, false);
+  }
+};
+
 export const sliderupload = multer({
   storage: sliderStorage,
   limits: { fileSize: 1 * 1024 * 1024 },
@@ -91,4 +113,8 @@ export const aboutupload = multer({
 export const menuupload = multer({
   storage: menuStorage,
   // limits: { fileSize: 1 * 1024 * 1024 },
+});
+export const whychooseusupload = multer({
+  storage: whychooseusstorage,
+  fileFilter,
 });

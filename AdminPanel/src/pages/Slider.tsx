@@ -13,6 +13,7 @@ const Slider = () => {
   const [id, setId] = React.useState('');
   const [show, setShow] = React.useState(false);
   const [loading, setloading] = React.useState(false);
+  const [flag, setFlag]=React.useState(false)
 
   const getsliders = async () => {
     try {
@@ -26,13 +27,15 @@ const Slider = () => {
     } catch (error) {
       if (isAxiosError(error)) {
         setloading(false);
+        setData([])
         return toast.error(error.response?.data.message);
       }
     }
   };
   React.useEffect(() => {
+    console.log("I am running ")
     getsliders();
-  }, []);
+  }, [flag]);
 
   const column = [
     { title: 'SN' },
@@ -49,8 +52,8 @@ const Slider = () => {
         setShow(false);
         setId('');
         toast.success(res.data.message);
-
-        getsliders();
+setFlag(!flag)
+        // getsliders();
       }
     } catch (error) {
       if (isAxiosError(error)) {
@@ -117,7 +120,7 @@ const Slider = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {data &&
+                    {data && data?.length > 0?
                       data?.map((el: any, ind: number) => (
                         <tr
                           className="hover:bg-slate-50 border-b border-slate-200"
@@ -130,17 +133,17 @@ const Slider = () => {
                           </td>
                           <td className="p-4 py-5 border border-r">
                             <p className=" font-semibold text-sm text-black flex items-center justify-center gap-4">
-                              {el.title}
+                              {el.title.slice(0,15)}...
                             </p>
                           </td>
                           <td className="p-4 py-5 border border-r">
                             <p className=" font-semibold text-sm text-black flex items-center justify-center gap-4">
-                              {el.slogan}
+                              {el.slogan.slice(0,15)}...
                             </p>
                           </td>
                           <td className="p-4 py-5 border border-r">
                             <p className=" font-semibold text-sm text-black flex items-center justify-center gap-4">
-                              {el.description}
+                              {el.description.slice(0,20)}...
                             </p>
                           </td>
                           <td className="p-4 py-5 border border-r">
@@ -181,13 +184,15 @@ const Slider = () => {
                               </button>
                             )} */}
                         </tr>
-                      ))}
+                      )) :  <tr>
+                      <td colSpan={column.length + 1} className="text-center p-4">
+                        No Sliders found
+                      </td>
+                    </tr>}
                   </tbody>
                 </table>
 
-                <div className="mt-4 text-center ">
-                  {data?.length < 1 && !loading && 'No Sliders found'}
-                </div>
+                
               </div>
             </div>
           </div>

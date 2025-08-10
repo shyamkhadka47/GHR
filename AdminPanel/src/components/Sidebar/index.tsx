@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Navigate, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import { BsPeopleFill, BsSliders } from 'react-icons/bs';
 import { FaPeopleGroup, FaPhone, FaQuestion } from 'react-icons/fa6';
@@ -10,7 +10,6 @@ import { IoRestaurantOutline } from 'react-icons/io5';
 
 import { TfiGallery } from 'react-icons/tfi';
 import { TbLogout2 } from 'react-icons/tb';
-import axios, { isAxiosError } from 'axios';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -294,7 +293,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }`}
                 >
                   <FaQuestion size={20} />
-                  FAQ'S
+                 {` FAQ'S`}
                 </NavLink>
               </li>
 

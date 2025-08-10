@@ -75,10 +75,10 @@ class sliderController {
   static getSlider = async (req, res) => {
     try {
       const findslider = await slidermodal.find().sort({ createdAt: -1 });
-      if (!findslider) {
+      if (findslider.length == 0) {
         return res
           .status(400)
-          .json({ success: false, message: "No Slider Found" });
+          .json({ success: false, message: "No Slider Found", data:findslider });
       }
 
       return res.status(200).json({ success: true, data: findslider });
