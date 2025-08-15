@@ -1,4 +1,10 @@
+"use client";
 import { Star, Quote } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from 'swiper/modules'
+
+// Import Swiper styles
+import "swiper/css";
 
 const Testimonials = () => {
   const testimonials = [
@@ -11,6 +17,20 @@ const Testimonials = () => {
     },
     {
       name: "Albert Flores",
+      role: "Founder",
+      content:
+        "It uses a dictionary of over 200 Latin words, combined with handful model tence structures, to generate Lorem Ipsum which lo reasonable. The gener Lorem Ipsum done",
+      rating: 5,
+    },
+    {
+      name: "Guy Hawkins",
+      role: "Founder",
+      content:
+        "It uses a dictionary of over 200 Latin words, combined with handful model tence structures, to generate Lorem Ipsum which lo reasonable. The gener Lorem Ipsum done",
+      rating: 5,
+    },
+    {
+      name: "Guy Hawkins",
       role: "Founder",
       content:
         "It uses a dictionary of over 200 Latin words, combined with handful model tence structures, to generate Lorem Ipsum which lo reasonable. The gener Lorem Ipsum done",
@@ -45,53 +65,67 @@ const Testimonials = () => {
         </div>
 
         {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              className="relative overflow-hidden bg-white rounded-lg p-8 shadow hover:shadow-nexava-lg transition-all duration-300 hover:-translate-y-1"
-            >
-              {/* Quote Icon */}
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-6">
-                <Quote className="w-6 h-6 text-primary" />
-              </div>
+        <Swiper
+        modules={[Autoplay]}
+          autoplay={{ delay: 1000, pauseOnMouseEnter: true }}
+          loop
+          spaceBetween={50}
+          slidesPerView={3}
+        >
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <SwiperSlide key={index}>
+                <div
+                  key={index}
+                  className="relative overflow-hidden bg-white rounded-lg p-8 shadow hover:shadow-nexava-lg transition-all duration-300 hover:-translate-y-1"
+                >
+                  {/* Quote Icon */}
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                    <Quote className="w-6 h-6 text-primary" />
+                  </div>
 
-              {/* Rating */}
-              <div className="flex items-center space-x-1 mb-4">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="w-5 h-5 fill-amber-400 text-amber-400"
-                  />
-                ))}
-              </div>
+                  {/* Rating */}
+                  <div className="flex items-center space-x-1 mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="w-5 h-5 fill-amber-400 text-amber-400"
+                      />
+                    ))}
+                  </div>
 
-              {/* Content */}
-              <p className="text-muted-foreground mb-6 italic">
-                {testimonial.content}
-              </p>
+                  {/* Content */}
+                  <p className="text-muted-foreground mb-6 italic">
+                    {testimonial.content}
+                  </p>
 
-              {/* Author */}
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                  <span className="text-primary font-bold">
-                    {testimonial.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")}
-                  </span>
+                  {/* Author */}
+                  <div className="flex items-center space-x-3">
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                      <span className="text-primary font-bold">
+                        {testimonial.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </span>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-foreground">
+                        {testimonial.name}
+                      </h4>
+                      <p className="text-sm text-muted-foreground">
+                        {testimonial.role}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Decorative Element */}
+                  <div className="absolute top-4 right-4 w-8 h-8 bg-primary/5 rounded-full"></div>
                 </div>
-                <div>
-                  <h4 className="font-bold text-foreground">{testimonial.name}</h4>
-                  <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-                </div>
-              </div>
-
-              {/* Decorative Element */}
-              <div className="absolute top-4 right-4 w-8 h-8 bg-primary/5 rounded-full"></div>
-            </div>
-          ))}
-        </div>
+              </SwiperSlide>
+            ))}
+          </div>
+        </Swiper>
       </div>
     </section>
   );

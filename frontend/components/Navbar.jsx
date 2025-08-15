@@ -53,7 +53,7 @@ const Navbar = () => {
         <div className="px-[5%] md:px-[10%]">
           <div className="flex justify-between items-center">
             {/* Logo */}
-            <Link href={"/"}>
+            <Link href={"/"} onClick={()=>setIsMobileMenuOpen(false)}>
               <Image
                 src="/logo.webp"
                 width={100}
@@ -101,14 +101,15 @@ const Navbar = () => {
           {isMobileMenuOpen && (
             <div className="lg:hidden mt-4 pb-4 border-t border-border">
               <div className="flex flex-col space-y-4 pt-4">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.href}
+                {navLinks.map((link, i) => (
+                  <Link
+                    key={i}
                     href={link.href}
                     className="text-foreground hover:text-primary transition-colors"
+                    onClick={()=>setIsMobileMenuOpen(false)}
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 ))}
                 <Link href={"/budget-calculator"} className="bg-primary hover:bg-primary-dark text-white px-5 py-2 rounded-md font-medium transition-all w-fit">
                  Budget Calculator

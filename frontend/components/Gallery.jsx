@@ -15,17 +15,17 @@ const Gallery = () => {
     {
       title: "Ocean View Restaurant",
       category: "Fine Dining",
-      image: "/gb1.webp",
+      image: "/gb3.webp",
     },
     {
       title: "Private Marina",
       category: "Water Activities",
-      image: "/gb2.webp",
+      image: "/gb4.webp",
     },
     {
       title: "Wedding Pavilion",
       category: "Special Events",
-      image: "/gb1.webp",
+      image: "/gb5.webp",
     },
     {
       title: "Pool Bar & Lounge",

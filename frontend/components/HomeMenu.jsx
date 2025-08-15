@@ -6,31 +6,31 @@ const HomeMenu = () => {
   const services = [
     {
       icon: <Sparkles className="w-8 h-8" />,
-      image: "/gb1.webp",
+      image: "/gb5.webp",
       title: "Luxury Spa & Wellness",
       description: "Rejuvenate your mind and body with our world-class spa treatments and wellness programs in a serene tropical setting.",
     },
     {
       icon: <Utensils className="w-8 h-8" />,
-      image: "/gb2.webp",
+      image: "/gb6.webp",
       title: "Fine Dining Experience",
       description: "Savor exquisite cuisine crafted by renowned chefs using the finest local and international ingredients.",
     },
     {
       icon: <Waves className="w-8 h-8" />,
-      image: "/gb1.webp",
+      image: "/gb7.webp",
       title: "Infinity Pool & Beach",
       description: "Relax by our stunning infinity pool or enjoy pristine white sand beaches with crystal-clear waters.",
     },
     {
       icon: <Bed className="w-8 h-8" />,
-      image: "/gb2.webp",
+      image: "/gb8.webp",
       title: "Luxury Suites & Villas",
       description: "Stay in elegantly appointed suites and villas featuring ocean views, private terraces, and premium amenities.",
     },
     {
       icon: <Waves className="w-8 h-8" />,
-      image: "/gb1.webp",
+      image: "/gb9.webp",
       title: "Water Sports & Activities",
       description: "Enjoy thrilling water sports including snorkeling, kayaking, sailing, and deep-sea fishing adventures.",
     },
