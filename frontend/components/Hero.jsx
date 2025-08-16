@@ -3,9 +3,6 @@
 import { Play, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-// import slider1 from "@/gb1.webp";
-// import slider2 from "@/gb2.webp";
-// import slider3 from "@/assets/slider-3.jpg";
 
 // Custom Tailwind-styled Button component
 const Button = ({ children, className = "", ...props }) => {
@@ -37,13 +34,6 @@ const Hero = () => {
       description:
         "Relax by our stunning infinity pool while watching breathtaking sunsets over the ocean. The perfect setting for an unforgettable evening.",
     },
-    // {
-    //   image: slider3,
-    //   title: "Spa & Wellness",
-    //   subtitle: "Rejuvenate",
-    //   description:
-    //     "Discover inner peace and rejuvenation at our world-class spa pavilion surrounded by tropical gardens and ocean views.",
-    // },
   ];
 
   useEffect(() => {
@@ -75,9 +65,11 @@ const Hero = () => {
             <Image
               src={slide.image}
               alt={`Slide ${index + 1}`}
-              fill
-              className="object-cover object-center"
+              layout="fill"
+              objectFit="cover"
+              objectPosition="center"
               priority={index === 0} // preload the first image for performance
+              sizes="(max-width: 768px) 100vw, 50vw" // Responsive image sizes based on viewport
             />
 
             {/* Gradient Overlay */}
