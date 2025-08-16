@@ -76,7 +76,7 @@ const Hero = () => {
               src={slide.image}
               alt={`Slide ${index + 1}`}
               fill
-              className="object-cover object-center"
+              className="object-cover "
               priority={index === 0} // preload the first image for performance
               sizes="(max-width:768px) 22vw , 100vw"
             />
