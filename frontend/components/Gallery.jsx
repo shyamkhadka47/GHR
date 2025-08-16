@@ -1,4 +1,5 @@
 import { ArrowRight, ExternalLink } from "lucide-react";
+import Image from "next/image";
 
 const Gallery = () => {
   const projects = [
@@ -65,7 +66,9 @@ const Gallery = () => {
               className="group overflow-hidden rounded-lg shadow hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white"
             >
               <div className="relative">
-                <img
+                <Image
+                width={495}
+                height={256}
                   src={project.image}
                   alt={project.title}
                   className="w-full h-64 object-cover"
