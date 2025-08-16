@@ -78,6 +78,7 @@ const Hero = () => {
               fill
               className="object-cover object-center"
               priority={index === 0} // preload the first image for performance
+              sizes="(max-width:768px) 33vw , 100vw"
             />
 
             {/* Gradient Overlay */}
