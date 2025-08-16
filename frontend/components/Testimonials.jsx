@@ -1,7 +1,7 @@
 "use client";
 import { Star, Quote } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from 'swiper/modules'
+import { Autoplay } from "swiper/modules";
 
 // Import Swiper styles
 import "swiper/css";
@@ -66,11 +66,16 @@ const Testimonials = () => {
 
         {/* Testimonials Grid */}
         <Swiper
-        modules={[Autoplay]}
-          autoplay={{ delay: 1000, pauseOnMouseEnter: true }}
+          modules={[Autoplay]}
+          autoplay={{ delay: 2000, pauseOnMouseEnter: true }}
           loop
           spaceBetween={50}
-          slidesPerView={3}
+          breakpoints={{
+            320: { slidesPerView: 1 },
+            640: { slidesPerView: 2 },
+
+            1024: { slidesPerView: 3 },
+          }}
         >
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
