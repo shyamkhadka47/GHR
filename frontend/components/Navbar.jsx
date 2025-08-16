@@ -53,17 +53,20 @@ const Navbar = () => {
         <div className="px-[5%] md:px-[10%]">
           <div className="flex justify-between items-center">
             {/* Logo */}
-            <Link href={"/"} onClick={()=>setIsMobileMenuOpen(false)}>
-              <Image
-                src="/logo.webp"
-                width={100}
-                height={100}
-                alt="Gokarna Hill Side Logo"
-                className="object-cover"
-                sizes="100px"
-                quality={75}
-              />
-            </Link>
+            <div className="w-[100px] h-[60px]">
+              {" "}
+              <Link href={"/"} onClick={() => setIsMobileMenuOpen(false)}>
+                <Image
+                  src="/logo.webp"
+                  width={100}
+                  height={100}
+                  alt="Gokarna Hill Side Logo"
+                  className="w-full h-full object-cover"
+                  sizes="100px"
+                  quality={75}
+                />
+              </Link>
+            </div>
 
             {/* Desktop Menu */}
             <div className="hidden lg:flex items-center space-x-8">
@@ -80,7 +83,10 @@ const Navbar = () => {
 
             {/* CTA Button & Mobile Menu Button */}
             <div className="flex items-center space-x-4">
-              <Link href={"/budget-calculator"} className="hidden md:flex bg-primary hover:bg-primary-dark text-white px-5 py-2 rounded-md font-medium transition-all">
+              <Link
+                href={"/budget-calculator"}
+                className="hidden md:flex bg-primary hover:bg-primary-dark text-white px-5 py-2 rounded-md font-medium transition-all"
+              >
                 Budget Calculator
               </Link>
 
@@ -106,13 +112,16 @@ const Navbar = () => {
                     key={i}
                     href={link.href}
                     className="text-foreground hover:text-primary transition-colors"
-                    onClick={()=>setIsMobileMenuOpen(false)}
+                    onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {link.label}
                   </Link>
                 ))}
-                <Link href={"/budget-calculator"} className="bg-primary hover:bg-primary-dark text-white px-5 py-2 rounded-md font-medium transition-all w-fit">
-                 Budget Calculator
+                <Link
+                  href={"/budget-calculator"}
+                  className="bg-primary hover:bg-primary-dark text-white px-5 py-2 rounded-md font-medium transition-all w-fit"
+                >
+                  Budget Calculator
                 </Link>
               </div>
             </div>
