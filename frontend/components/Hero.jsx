@@ -62,7 +62,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative w-full h-[750px] mt-[100px] flex items-center overflow-hidden">
+    <section className="relative min-h-screen mt-[100px] flex items-center overflow-hidden">
       {/* Background Image Slider */}
       <div className="absolute inset-0">
         {slides.map((slide, index) => (
@@ -75,11 +75,9 @@ const Hero = () => {
             <Image
               src={slide.image}
               alt={`Slide ${index + 1}`}
-              width={800}
-              height={600}
-              className=" w-full h-full object-cover object-center"
+              fill
+              className="object-cover object-center"
               priority={index === 0} // preload the first image for performance
-              sizes="(max-width:768px) 162px, 100vw"
             />
 
             {/* Gradient Overlay */}
