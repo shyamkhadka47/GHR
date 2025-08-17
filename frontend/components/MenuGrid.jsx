@@ -62,7 +62,7 @@ export default function MenuGrid({ menuCategories }) {
                         className="w-full h-full object-cover "
                       />
                       <div className="absolute z-10 inset-0 transition-transform duration-500 group-hover:bg-green-100 group-hover:scale-0 group-hover:opacity-25"></div>
-                      <div className="bg-primary  absolute inset-0 bg-black/40 z-20 opacity-0 group-hover:opacity-100 scale-0 group-hover:scale-100 transition-all duration-700 ">
+                      <div className="absolute inset-0 bg-black/40 z-20 opacity-0 group-hover:opacity-100 w-0 group-hover:w-full transition-all duration-1000 ">
                         {" "}
                         {/* <Eye className="p-2" size={50} color="white" />{" "} */}
                       </div>

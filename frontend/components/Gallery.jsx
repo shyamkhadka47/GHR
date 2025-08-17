@@ -1,5 +1,6 @@
 import { ArrowRight, ExternalLink } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Gallery = () => {
   const projects = [
@@ -85,10 +86,10 @@ const Gallery = () => {
 
                 {/* Hover Button Overlay */}
                 <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <button className="inline-flex items-center bg-white text-primary text-sm font-medium px-4 py-2 rounded hover:bg-white/90 transition">
+                  <Link href={"/gallery"} className="inline-flex items-center bg-white text-primary text-sm font-medium px-4 py-2 rounded hover:bg-white/90 transition">
                     View Gallery
                     <ExternalLink className="ml-2 w-4 h-4" />
-                  </button>
+                  </Link>
                 </div>
               </div>
 
@@ -106,10 +107,10 @@ const Gallery = () => {
 
         {/* CTA Button */}
         <div className="text-center mt-16">
-          <button className="inline-flex items-center bg-primary hover:bg-primary-dark text-white font-medium px-8 py-3 text-base rounded transition-all">
+          <Link href={"/gallery"} className="inline-flex items-center bg-primary hover:bg-primary-dark text-white font-medium px-8 py-3 text-base rounded transition-all">
             Explore All Gallery
             <ArrowRight className="ml-2 w-5 h-5" />
-          </button>
+          </Link>
         </div>
       </div>
     </section>
