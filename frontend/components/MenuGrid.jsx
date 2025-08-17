@@ -1,5 +1,5 @@
-"use client"
-import { Star, Flame, Crown, Clock, ShoppingCart } from "lucide-react";
+"use client";
+import { Star, Flame, ShoppingCart, Eye } from "lucide-react";
 import Image from "next/image";
 
 export default function MenuGrid({ menuCategories }) {
@@ -43,7 +43,7 @@ export default function MenuGrid({ menuCategories }) {
                     )}
 
                     {/* Rating */}
-                    <div className="absolute top-3 right-3 flex items-center bg-white/90 backdrop-blur-sm px-2 py-1 rounded-md z-10">
+                    <div className="absolute top-3 right-3 flex items-center bg-white/90 backdrop-blur-sm px-2 py-1 rounded-md z-30">
                       <Star className="w-4 h-4 text-yellow-400 fill-current mr-1" />
                       <span className="text-sm font-medium text-gray-800">
                         {item.rating}
@@ -51,7 +51,7 @@ export default function MenuGrid({ menuCategories }) {
                     </div>
 
                     {/* Image */}
-                    <div className="h-48 bg-gray-100 overflow-hidden flex-shrink-0">
+                    <div className="h-48 relative bg-gray-100 overflow-hidden flex-shrink-0 group">
                       <Image
                         width={300}
                         height={200}
@@ -59,8 +59,13 @@ export default function MenuGrid({ menuCategories }) {
                           item.image || "/placeholder.svg?height=200&width=300"
                         }
                         alt={item.name}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover "
                       />
+                      <div className="absolute z-10 inset-0 transition-transform duration-500 group-hover:bg-green-100 group-hover:scale-0 group-hover:opacity-25"></div>
+                      <div className="bg-primary  absolute inset-0 bg-black/40 z-20 opacity-0 group-hover:opacity-100 scale-0 group-hover:scale-100 transition-all duration-700 ">
+                        {" "}
+                        {/* <Eye className="p-2" size={50} color="white" />{" "} */}
+                      </div>
                     </div>
 
                     {/* Content - flex-grow to fill remaining space */}
