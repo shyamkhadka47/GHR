@@ -74,6 +74,15 @@ export const whychooseusstorage = multer.diskStorage({
   },
 });
 
+export const ourteamstorage= multer.diskStorage({
+  destination:function(req,file, cb){
+    cb(null, "public/ourteam")
+  },
+  filename:function(req, file, cb){
+    cb(null, `${Date.now()}-${file.originalname}`)
+  }
+})
+
 const fileFilter = (req, file, cb) => {
   const allowedMimeTypes = ["image/jpeg", "image/png", "image/webp"];
 
@@ -118,3 +127,8 @@ export const whychooseusupload = multer({
   storage: whychooseusstorage,
   fileFilter,
 });
+
+export const ourteamupload= multer({
+  storage:ourteamstorage,
+  fileFilter
+})

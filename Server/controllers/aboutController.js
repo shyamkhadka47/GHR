@@ -76,7 +76,7 @@ class aboutController {
   };
   static getAboutUs = async (req, res) => {
     try {
-      const findabout = await aboutmodal.find();
+      const findabout = await aboutmodal.find().lean();
       if (findabout.length == 0) {
         return res
           .status(400)

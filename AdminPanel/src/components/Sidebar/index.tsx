@@ -5,7 +5,7 @@ import { BsPeopleFill, BsSliders } from 'react-icons/bs';
 import { FaPeopleGroup, FaPhone, FaQuestion } from 'react-icons/fa6';
 import { MdClose, MdEngineering } from 'react-icons/md';
 import { RxDashboard } from 'react-icons/rx';
-import { AiOutlineSetting } from 'react-icons/ai';
+import { AiOutlineArrowRight, AiOutlineSetting } from 'react-icons/ai';
 import { IoRestaurantOutline } from 'react-icons/io5';
 
 import { TfiGallery } from 'react-icons/tfi';
@@ -22,6 +22,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
+  const [aboutflag, setAboutFlag] = useState<any>(false);
   const navigate = useNavigate();
 
   const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
@@ -200,6 +201,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 (isActive && '!text-white')
                               }
                             >
+                              <AiOutlineArrowRight />
+
                               View Menu Category
                             </NavLink>
                           </li>
@@ -211,6 +214,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 (isActive && '!text-white')
                               }
                             >
+                              <AiOutlineArrowRight />
+
                               View Menu Item
                             </NavLink>
                           </li>
@@ -235,17 +240,91 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </NavLink>
               </li>
               {/* About us  */}
-              <li>
-                <NavLink
-                  to="/about-us"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+              <ul>
+                <li
+                  className={`group relative flex items-center gap-2.5 cursor-pointer rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('profile') && 'bg-graydark dark:bg-meta-4'
                   }`}
+                  onClick={() => setAboutFlag(!aboutflag)}
                 >
                   <BsPeopleFill />
                   About Us
-                </NavLink>
-              </li>
+                  <svg
+                    className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+                      aboutflag && 'rotate-180'
+                    }`}
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
+                      fill=""
+                    />
+                  </svg>
+                </li>
+                {aboutflag && (
+                  <div>
+                    <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
+                      <li>
+                        <NavLink
+                          to="/about-us"
+                          className={({ isActive }) =>
+                            'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                            (isActive && '!text-white')
+                          }
+                        >
+                          <AiOutlineArrowRight />
+                          About Us
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink
+                          to="/why-choose-us"
+                          className={({ isActive }) =>
+                            'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                            (isActive && '!text-white')
+                          }
+                        >
+                          <AiOutlineArrowRight />
+
+                          Why Choose us
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink
+                          to="/our-Core-Value"
+                          className={({ isActive }) =>
+                            'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                            (isActive && '!text-white')
+                          }
+                        >
+                          <AiOutlineArrowRight />
+
+                          Our Core Values
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink
+                          to="/our-team"
+                          className={({ isActive }) =>
+                            'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                            (isActive && '!text-white')
+                          }
+                        >
+                          <AiOutlineArrowRight />
+
+                          Our Teams
+                        </NavLink>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </ul>
               {/* Customer Testimonial */}
               <li>
                 <NavLink
@@ -293,7 +372,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }`}
                 >
                   <FaQuestion size={20} />
-                 {` FAQ'S`}
+                  {` FAQ'S`}
                 </NavLink>
               </li>
 

@@ -1,0 +1,13 @@
+.jodit-wysiwyg ul,
+        .jodit-wysiwyg ol {
+          padding-left: 40px !important;
+          margin: 2px 0 !important;
+        }
+        .jodit-wysiwyg ul li {
+          list-style-type: disc !important;
+          margin: 5px 0 !important;
+        }
+        .jodit-wysiwyg ol li {
+          list-style-type: decimal !important;
+          margin: 5px 0 !important;
+        }

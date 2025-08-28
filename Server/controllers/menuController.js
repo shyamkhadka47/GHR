@@ -33,13 +33,23 @@ class menuController {
       });
     }
 
-    if (!title || !description || !price || !menuCategory || !filename) {
+    if (
+      !title ||
+      !description ||
+      !price ||
+      price < 1 ||
+      !menuCategory ||
+      !filename
+    ) {
       if (filename) {
         await menuController.deleteImage(filename);
       }
       return res
         .status(400)
-        .json({ success: false, message: "All Fields are Required" });
+        .json({
+          success: false,
+          message: "All Fields are Required and Price Should above 0",
+        });
     }
 
     if (!mongoose.Types.ObjectId.isValid(menuCategory)) {
@@ -64,7 +74,7 @@ class menuController {
       // Check for existing slug
       const existingMenu = await menumodel.findOne({ slug });
       if (existingMenu) {
-        await this.deleteImage(filename);
+        await menuController.deleteImage(filename);
         return res.status(409).json({
           success: false,
           message: "A menu with this title already exists",
@@ -107,7 +117,9 @@ class menuController {
         .sort({ createdAt: -1 })
         .populate("menuCategory")
         .skip(skip)
-        .limit(limit);
+        .limit(limit)
+        .lean();
+
       return res.status(200).json({
         success: true,
         data: allmenu,
@@ -128,7 +140,7 @@ class menuController {
     try {
       const singlemenu = await menumodel
         .findOne({ slug })
-        .populate("menuCategory");
+        .populate("menuCategory").lean();
       if (!singlemenu) {
         return res
           .status(400)

@@ -35,6 +35,9 @@ import EditGallery from './pages/EditGallery';
 import EditMenuCategory from './pages/EditMenuCategory';
 import EditMenu from './pages/EditMenu';
 import AssociatedMenus from './pages/AssociatedMenus';
+import WhyChooseUs from './pages/WhyChooseUs';
+import OurCoreValues from './pages/OurCoreValues';
+import OurTeams from './pages/OurTeams';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -109,6 +112,33 @@ function App() {
               <>
                 <PageTitle title="Profile | Gokarna Hillside Resort " />
                 <Aboutus />
+              </>
+            }
+          />
+          <Route
+            path="/why-choose-us"
+            element={
+              <>
+                <PageTitle title="Why Choose Us " />
+                <WhyChooseUs />
+              </>
+            }
+          />
+          <Route
+            path="/our-core-value"
+            element={
+              <>
+                <PageTitle title="Our Core Value " />
+                <OurCoreValues />
+              </>
+            }
+          />
+          <Route
+            path="/our-team"
+            element={
+              <>
+                <PageTitle title="Our Teams " />
+                <OurTeams />
               </>
             }
           />

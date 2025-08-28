@@ -132,7 +132,7 @@ const AddNewMenuItem = () => {
             <input
               value={data.price}
               onChange={(e) => handleChange(e)}
-              type="number"
+              type="text"
               name="price"
               className="rounded-md w-full h-[60px] p-5 text-black bg-[#f1f3f9] outline-none"
               placeholder="Enter Price of Item"
