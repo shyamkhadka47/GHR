@@ -33,7 +33,7 @@ const Slider = () => {
     }
   };
   React.useEffect(() => {
-    console.log("I am running ")
+
     getsliders();
   }, [flag]);
 

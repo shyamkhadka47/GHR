@@ -65,7 +65,7 @@ class ourteamController {
         .lean();
       if (getallteam.length < 1) {
         return res
-          .status(200)
+          .status(400)
           .json({ success: false, message: "There are No Teams Data " });
       }
 

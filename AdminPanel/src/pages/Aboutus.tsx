@@ -6,8 +6,10 @@ import toast from 'react-hot-toast';
 import axiosInstance from '../hooks/axiosConfig';
 import { isAxiosError } from 'axios';
 import { downloadImage } from '../hooks/convertImageToFile';
-import JoditEditor from 'jodit-react';
-import '../css/about.css';
+
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 
 const Aboutus = () => {
   const getaboutus = async () => {
@@ -109,14 +111,27 @@ const Aboutus = () => {
     getaboutus();
   };
 
-  const config = useMemo(
+  const modules = useMemo(
     () => ({
-      height: 400,
-      readonly: false,
-      placeholder: '',
+      toolbar: [
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ color: [] }, { background: [] }],
+        [{ font: [] }],
+        [{ script: 'sub' }, { script: 'super' }],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        [{ indent: '-1' }, { indent: '+1' }],
+        [{ align: [] }],
+        ['blockquote', 'code-block'],
+        ['link', 'image', 'video'],
+        ['clean'],
+      ],
+     
     }),
     [],
   );
+
+
 
   return (
     <>
@@ -160,8 +175,10 @@ const Aboutus = () => {
                     Content
                   </label>
                   <div className="rounded-md border border-gray-300 bg-white dark:border-strokedark dark:bg-meta-4">
-                    <JoditEditor
-                      config={config}
+                    <ReactQuill
+                      className="h=[400px]"
+                      modules={modules}
+                      theme="snow"
                       value={data.content}
                       onChange={(content) =>
                         setData((prev) => ({ ...prev, content }))

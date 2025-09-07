@@ -104,7 +104,7 @@ Router.post("/addourteam", ourteamupload.single("image"), ourteamController.addn
 Router.get("/getallourteam", ourteamController.getallteam)
 Router.get("/getsingleourteam/:id", ourteamController.getsingleteam )
 Router.put("/editourteam/:id", ourteamupload.single("image"), ourteamController.updateteam)
-Router.delete("/deleteourteam?:id", ourteamController.deleteteam)
+Router.delete("/deleteourteam/:id", ourteamController.deleteteam)
 
 
 

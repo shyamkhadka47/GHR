@@ -38,6 +38,8 @@ import AssociatedMenus from './pages/AssociatedMenus';
 import WhyChooseUs from './pages/WhyChooseUs';
 import OurCoreValues from './pages/OurCoreValues';
 import OurTeams from './pages/OurTeams';
+import AddNewTeam from './pages/AddNewTeam';
+import EditTeam from './pages/EditTeam';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -139,6 +141,24 @@ function App() {
               <>
                 <PageTitle title="Our Teams " />
                 <OurTeams />
+              </>
+            }
+          />
+          <Route
+            path="/add-new-team"
+            element={
+              <>
+                <PageTitle title="Add Teams " />
+                <AddNewTeam />
+              </>
+            }
+          />
+          <Route
+            path="/edit-team/:id"
+            element={
+              <>
+                <PageTitle title="Edit Teams " />
+                <EditTeam />
               </>
             }
           />
