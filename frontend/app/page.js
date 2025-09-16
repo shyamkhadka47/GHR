@@ -5,18 +5,17 @@ import Hero from "@/components/Hero";
 import HomeMenu from "@/components/HomeMenu";
 import Testimonials from "@/components/Testimonials";
 import WhyChooseUs from "@/components/WhyChooseUs";
-import Image from "next/image";
 
 export default function Home() {
   return (
-   <>
-   <Hero/>
-   <WhyChooseUs/>
-   <HomeMenu/>
-   <DiningExperiences/>
-   <Gallery/>
-   <Testimonials/>
-   <FAQ/>
-   </>
+    <>
+      <Hero />
+      <WhyChooseUs />
+      <HomeMenu />
+      <DiningExperiences />
+      <Gallery />
+      <Testimonials />
+      <FAQ />
+    </>
   );
 }
