@@ -154,8 +154,8 @@ export default async function Page() {
   ];
 
   return (
-    <main className="min-h-screen  mt-[100px]">
-      <header className="text-center p-20 mb-16 w-full bg-green-50">
+    <div className="  mt-[100px]">
+      <div className="text-center py-32 flex flex-col justify-center items-center mb-16 w-full bg-green-50">
         <div className="inline-flex items-center justify-center space-x-2 mb-4">
           <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
             <span className="text-xs text-primary-foreground font-bold">N</span>
@@ -171,7 +171,7 @@ export default async function Page() {
           Discover our carefully crafted dishes, featuring the finest
           ingredients and innovative culinary techniques
         </p>
-      </header>
+      </div>
 
       <MenuGrid menuCategories={menuCategories} />
       {/* CTA */}
@@ -201,6 +201,6 @@ export default async function Page() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

@@ -59,7 +59,7 @@ Router.delete("/deleteservice/:id", protect, serviceController.deleteService)
 
 // CUSTOMERS TESTIMONIAL API
 Router.post("/addtestimonials", protect, testimonialupload.single("image"),testimonialController.addTestimonial)
-Router.get("/getalltestimonial", protect, testimonialController.getAllTestimonial)
+Router.get("/getalltestimonial", testimonialController.getAllTestimonial)
 Router.get("/getsingletestimonial/:id", protect, testimonialController.getSingleTestimonial)
 Router.put("/updatetestimonial/:id", protect, testimonialupload.single("image"), testimonialController.updateTestimonial)
 Router.delete("/deletetestimonial/:id", protect, testimonialController.deleteTestimonial)

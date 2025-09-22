@@ -117,7 +117,7 @@ export default function Page() {
   ];
 
   return (
-    <div className="min-h-screen mt-[100px] bg-white">
+    <div className="mt-[100px] bg-white">
       {/* Hero Section */}
       <section className="relative py-32 bg-gradient-to-br from-primary via-primary-dark to-primary overflow-hidden">
         <div className="absolute inset-0 opacity-20">

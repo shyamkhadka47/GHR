@@ -46,7 +46,7 @@ export default function Page() {
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
         </div>
         <div className="px-[5%] md:px-[10%] relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
+          <div className="text-center ">
             <div className="flex items-center justify-center space-x-2 mb-6">
               <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
                 <span className="text-lg text-primary font-bold">PR</span>
